@@ -1,0 +1,14 @@
+{
+	"name": "BuildConnectionStrings",
+	"version": "1.0.0",
+	"description": "Sample Repository to quickly build connection strings",
+	"main": "index.js",
+	"author": "Rajiv Karthik Yanamandra(yvrkarthik@gmail.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/yvrkarthik/BuildConnectionStrings#readme",
+  "url": "https://github.com/yvrkarthik/BuildConnectionStrings/issues",
+  "repository": {
+    "type": "git",
+    "url":  "https: //github.com/yvrkarthik/BuildConnectionStrings.git"
+  }
+}
