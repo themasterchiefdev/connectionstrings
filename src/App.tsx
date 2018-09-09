@@ -7,7 +7,10 @@ class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        <Navbar header="Generate Connection Strings" />
+        <Navbar
+          header="Generate Connection Strings"
+          githubRepoUrl="https://github.com/yvrkarthik/BuildConnectionStrings"
+        />
         <main role="main" className="container-fluid">
           <ConnectionStrings />
         </main>
