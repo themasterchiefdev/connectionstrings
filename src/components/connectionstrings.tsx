@@ -1,15 +1,22 @@
-/* tslint:disable:object-literal-sort-keys */
+/* tslint:disable:object-literal-sort-keys 
+   tslint:disable-next-line:jsx-no-lambda
+   tslint:disable-next-line:no-console
+*/
 
 import * as React from "react";
 import { Component } from "react";
 import ConnectionStringsJSON, {
   IConnectionStringProvider
 } from "../services/stringdata";
+import ConnectionStringPanel from "./connectionStringPanel";
 
-export interface IMyComponentState {
+export interface IConnectionStringComponentState {
   connStrings: IConnectionStringProvider[];
 }
-export class ConnectionStrings extends Component<{}, IMyComponentState> {
+export class ConnectionStrings extends Component<
+  {},
+  IConnectionStringComponentState
+> {
   // has no props
   constructor(props: {}) {
     super(props);
@@ -17,6 +24,8 @@ export class ConnectionStrings extends Component<{}, IMyComponentState> {
     this.state = {
       connStrings: this.getAllConnectionStrings()
     };
+    // bind selected database provider event handler
+    this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
   }
 
   public render(): JSX.Element {
@@ -28,42 +37,35 @@ export class ConnectionStrings extends Component<{}, IMyComponentState> {
               Select the Database Provider
             </label>
           </div>
-          <select className="custom-select" id="inputGroupSelect01">
-            <option selected={true}>Choose...</option>
+          <select
+            className="custom-select"
+            id="inputGroupSelect01"
+            onChange={this.selectedDatabaseProvider}
+          >
+            <option value="">Choose...</option>
             {this.state.connStrings.map(cs => (
-              <option value={cs.databaseName}>{cs.databaseName}</option>
+              <option value={cs.databaseName} key={cs.databaseName}>
+                {cs.databaseName}
+              </option>
             ))}
           </select>
         </div>
-        <div>
-          <table className="table">
-            <thead>
-              <tr className="text-left">
-                <th scope="col">Database Name</th>
-                <th scope="col">Connection String Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.connStrings.map(cs => (
-                <tr key={cs.databaseName} className="text-left">
-                  <td>{cs.databaseName}</td>
-                  <td>
-                    {cs.connectionStringDetails.map((sd, index) => (
-                      <React.Fragment key={index}>
-                        <div className="font-weight-bold">{sd.description}</div>
-                        <div>{sd.connectionString}</div>
-                      </React.Fragment>
-                    ))}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <ConnectionStringPanel databaseProvider="Excel" />
       </React.Fragment>
     );
   }
 
+  private selectedDatabaseProvider(e: any) {
+    const selectedValue = e.target.value;
+    // validate the selectedValue
+    if (selectedValue === "") {
+      // tslint:disable-next-line:no-console
+      console.log("Please select a database provider");
+    } else {
+      // tslint:disable-next-line:no-console
+      console.log("Option Selected " + selectedValue);
+    }
+  }
   private getAllConnectionStrings(): IConnectionStringProvider[] {
     const connStrings = new ConnectionStringsJSON();
     return connStrings.getAllConnectionStrings();
