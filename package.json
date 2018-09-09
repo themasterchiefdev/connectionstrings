@@ -27,5 +27,5 @@
 		"@types/react-dom": "^16.0.7",
 		"typescript": "^3.0.3"
 	},
-	"homepage": "https://yvrkarthik.github.io/BuildConnectionStrings/"
+	"homepage": "https://yvrkarthik.github.io/buildconnectionstrings/"
 }
