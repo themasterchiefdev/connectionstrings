@@ -8,10 +8,11 @@ import { Component } from "react";
 import ConnectionStringsJSON, {
   IConnectionStringProvider
 } from "../services/stringdata";
-import ConnectionStringPanel from "./connectionStringPanel";
+import ConnectionStringPanel from "./displayconnectionstringcard";
 
 export interface IConnectionStringComponentState {
   connStrings: IConnectionStringProvider[];
+  databaseProvider: string;
 }
 export class ConnectionStrings extends Component<
   {},
@@ -22,13 +23,19 @@ export class ConnectionStrings extends Component<
     super(props);
     // get the state from the private function
     this.state = {
-      connStrings: this.getAllConnectionStrings()
+      connStrings: this.getAllConnectionStrings(),
+      databaseProvider: ""
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
   }
 
   public render(): JSX.Element {
+    const databaseProvidersList = this.state.connStrings.map(cs => (
+      <option value={cs.databaseName} key={cs.databaseName}>
+        {cs.databaseName}
+      </option>
+    ));
     return (
       <React.Fragment>
         <div className="input-group mb-3">
@@ -43,14 +50,10 @@ export class ConnectionStrings extends Component<
             onChange={this.selectedDatabaseProvider}
           >
             <option value="">Choose...</option>
-            {this.state.connStrings.map(cs => (
-              <option value={cs.databaseName} key={cs.databaseName}>
-                {cs.databaseName}
-              </option>
-            ))}
+            {databaseProvidersList}
           </select>
         </div>
-        <ConnectionStringPanel databaseProvider="Excel" />
+        <ConnectionStringPanel databaseProvider={this.state.databaseProvider} />
       </React.Fragment>
     );
   }
@@ -61,9 +64,16 @@ export class ConnectionStrings extends Component<
     if (selectedValue === "") {
       // tslint:disable-next-line:no-console
       console.log("Please select a database provider");
+      this.setState({
+        databaseProvider: ""
+      });
     } else {
       // tslint:disable-next-line:no-console
-      console.log("Option Selected " + selectedValue);
+      // console.log("Option Selected " + selectedValue);
+
+      this.setState({
+        databaseProvider: selectedValue
+      });
     }
   }
   private getAllConnectionStrings(): IConnectionStringProvider[] {
