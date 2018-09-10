@@ -25,9 +25,6 @@ class ConnectionStringPanel extends Component<
   }
 
   public render() {
-    // tslint:disable-next-line:no-console
-    // console.log("Hello!! " + this.props.databaseProvider);
-
     return (
       <React.Fragment>
         <div className="add-padding-bottom">
