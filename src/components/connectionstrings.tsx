@@ -54,6 +54,20 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
+        <div>
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <label className="input-group-text" htmlFor="inputGroupSelect01">
+                Select Authentication Type &nbsp;&nbsp;&nbsp;
+              </label>
+            </div>
+            <select className="custom-select" id="inputGroupSelect01">
+              <option value="">Choose...</option>
+              <option value="1">Trusted Connection</option>
+              <option value="2">Database Login</option>
+            </select>
+          </div>
+        </div>
         {displayConnectionStringsRelatedToProviders}
       </React.Fragment>
     );
