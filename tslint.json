@@ -8,10 +8,12 @@
 				"options": [120]
 			},
 			"ordered-imports": false,
-			"object-literal-sort-keys": false
+			"object-literal-sort-keys": false,
+			"no-console": false
 		},
 		"jsRules": {
-			"object-literal-sort-keys": false
+			"object-literal-sort-keys": false,
+			"no-console": false
 		},
 		"exclude": [
 			"config/**/*.js",
