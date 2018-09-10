@@ -112,6 +112,7 @@ export class ConnectionStrings extends Component<
     ) as HTMLSelectElement;
     // validate the selectedValue
     if (selectedValue === "") {
+      getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: ""
       });
