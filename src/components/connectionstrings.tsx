@@ -37,7 +37,9 @@ export class ConnectionStrings extends Component<
     this.selectedConnectionStringType = this.selectedConnectionStringType.bind(
       this
     );
-    this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(this);
+    this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(
+      this
+    );
   }
 
   public render(): JSX.Element {
@@ -94,6 +96,7 @@ export class ConnectionStrings extends Component<
             aria-describedby="basic-addon3"
             value={this.state.databaseServerName}
             onChange={this.handleDatabaseServerNameChange}
+            placeholder={"database server name"}
           />
         </div>
         {displayConnectionStringsRelatedToProviders}
@@ -142,7 +145,7 @@ export class ConnectionStrings extends Component<
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: "",
-        databaseServerName:""
+        databaseServerName: ""
       });
     } else {
       getConnectionTypeDrpDwnList.selectedIndex = 0;
@@ -156,9 +159,7 @@ export class ConnectionStrings extends Component<
 
   private selectedConnectionStringType(e: any) {
     const selectedValue = e.target.value;
-    // tslint:disable-next-line:no-console
-    // console.log(selectedValue);
-    // validate the selectedValue
+
     if (selectedValue === "") {
       this.setState({
         connectionType: "",

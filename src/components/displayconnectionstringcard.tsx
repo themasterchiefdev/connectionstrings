@@ -37,7 +37,7 @@ class ConnectionStringPanel extends Component<
             <div className="card-body">
               <code id={this.props.connectionString}>
                 {this.props.connectionString.replace(
-                  "servername",
+                  "rajivsservername",
                   this.props.databaseServerName
                 )}
               </code>
