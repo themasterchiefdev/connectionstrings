@@ -35,7 +35,11 @@ class ConnectionStringPanel extends Component<
             <div className="card-header text-left font-weight-bold">
               {this.props.databaseProvider}
             </div>
-            <div className="card-body">{this.props.connectionString}</div>
+            <div className="card-body">
+              <code id={this.props.connectionString}>
+                {this.props.connectionString}
+              </code>
+            </div>
           </div>
         </div>
       </React.Fragment>

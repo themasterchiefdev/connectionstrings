@@ -55,3 +55,17 @@ Sticky footer Css styles
 	/* background-color: red; */
 	overflow: hidden;
 }
+.btn-clipboard {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	z-index: 10;
+	display: block;
+	padding: 0.25rem 0.5rem;
+	font-size: 100%;
+	/* color: #818a91; */
+	cursor: pointer;
+	/* background-color: transparent; */
+	border: 0;
+	border-radius: 0.25rem;
+}

@@ -111,12 +111,57 @@ export default class ConnectionStringsJSON {
               "User=SYSDBA;Password=mypasswd;Database=demo.fdb;DataSource=localhost;Port=3050;Dialect=3;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;Packet Size=8192;ServerType=0"
           }
         ]
+      },
+      {
+        databaseName: "Microsoft SQL Server",
+        connectionStringDetails: [
+          {
+            description: "SQL Server ODBC Connection String - Database Login",
+            connectionString:
+              "Driver={SQL Server};Server=myservername;Database=mydemodb;Uid=myusername;Pwd=mypasswd;"
+          },
+          {
+            description:
+              "SQL Server ODBC Connection String - Trusted Connection",
+            connectionString:
+              // tslint:disable-next-line:max-line-length
+              "Driver={SQL Server};Server=mysername;Database=mydemodb;Trusted_Connection=yes;"
+          },
+          {
+            description: "SQL Server OLEDB Connection String - Database Login",
+            connectionString:
+              // tslint:disable-next-line:max-line-length
+              "Provider=sqloledb;Data Source=myservername;Initial Catalog=mydemodb;User Id=myusername;Password=mypasswd;"
+          },
+          {
+            description:
+              "SQL Server OLEDB Connection String - Trusted Connection",
+            connectionString:
+              // tslint:disable-next-line:max-line-length
+              "Provider=sqloledb;Data Source=myservername;Initial Catalog=mydemodb;Integrated Security=SSPI;"
+          },
+          {
+            description: "SQL Server .Net Connection String - Database Login",
+            connectionString:
+              // tslint:disable-next-line:max-line-length
+              "Server=myservername;Database=mydemodb;User ID=myusername;Password=mypasswd;Trusted_Connection=False"
+          },
+          {
+            description:
+              "SQL Server .Net Connection String - Trusted Connection",
+            connectionString:
+              // tslint:disable-next-line:max-line-length
+              "Server=myservername;Database=mydemodb;Integrated Security=SSPI;"
+          }
+        ]
       }
     ];
     return connectionStrings;
   }
 
-  public getConnectionStringDetails(dbProvider:string): IConnectionStringDetails[] {
+  public getConnectionStringDetails(
+    dbProvider: string
+  ): IConnectionStringDetails[] {
     const s = this.getAllConnectionStrings().filter(
       x => x.databaseName === dbProvider
     );

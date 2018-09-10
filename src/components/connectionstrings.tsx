@@ -33,20 +33,10 @@ export class ConnectionStrings extends Component<
   }
 
   public render(): JSX.Element {
-    const databaseProvidersList = this.state.connStrings.map(cs => (
-      <option value={cs.databaseName} key={cs.databaseName}>
-        {cs.databaseName}
-      </option>
-    ));
-    const pro = this.getConnectionStringsFortheProvider(
-      this.state.databaseProvider
-    ).map((cs, i) => (
-      <ConnectionStringPanel
-        key={"strings_" + i}
-        databaseProvider={cs.description}
-        connectionString={cs.connectionString}
-      />
-    ));
+    // Loop through the JSON data and populate the drop down list with DB providers.
+    const databaseProvidersList = this.getDatabaseProvidersList();
+    // loop through and display all connection strings based on the database provider selected.
+    const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
     return (
       <React.Fragment>
         <div className="input-group mb-3">
@@ -64,9 +54,29 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
-        {pro}
+        {displayConnectionStringsRelatedToProviders}
       </React.Fragment>
     );
+  }
+
+  private displayConnectionStringsBasedOnProvider() {
+    return this.getConnectionStringsFortheProvider(
+      this.state.databaseProvider
+    ).map((cs, i) => (
+      <ConnectionStringPanel
+        key={"strings_" + i}
+        databaseProvider={cs.description}
+        connectionString={cs.connectionString}
+      />
+    ));
+  }
+
+  private getDatabaseProvidersList() {
+    return this.state.connStrings.map(cs => (
+      <option value={cs.databaseName} key={cs.databaseName}>
+        {cs.databaseName}
+      </option>
+    ));
   }
 
   private selectedDatabaseProvider(e: any) {
