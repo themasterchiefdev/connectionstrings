@@ -16,9 +16,16 @@ const Footer: React.SFC<IFooterProps> = (props: IFooterProps) => {
   return (
     <footer className="footer">
       <div className="container">
-        <a className="nav-link" href={props.githubRepoUrl}>
-          <Octicon icon={MarkGithub} size="medium" />
-        </a>
+        <div className="row">
+          <div className="col-sm">
+            &copy;&nbsp;Rajiv Karthik Yanamandra&nbsp; 2018
+          </div>
+          <div className="col-sm">
+            <a className="nav-link" href={props.githubRepoUrl}>
+              <Octicon icon={MarkGithub} size="medium" />
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   );
