@@ -191,4 +191,16 @@ export default class ConnectionStringsJSON {
     s.map(cs => cs.connectionStringDetails.map(cs1 => st.push(cs1)));
     return st;
   }
+
+  public getConnectionStringDetailsFilteredByConnectionType(
+    dbProvider: string,
+    connectionType: string
+  ) {
+    const s = this.getAllConnectionStrings().filter(
+      x => x.databaseName === dbProvider
+    );
+    const st: IConnectionStringDetails[] = [];
+    s.map(cs => cs.connectionStringDetails.map(cs1 => st.push(cs1)));
+    return st.filter(y => y.connectionType === connectionType);
+  }
 }
