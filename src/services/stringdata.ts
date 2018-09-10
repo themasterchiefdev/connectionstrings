@@ -39,7 +39,7 @@ export default class ConnectionStringsJSON {
           {
             description: "Access ODBC Connection String Driver",
             connectionString:
-              "{Microsoft Access Driver (*.mdb)};Dbq=C:demo.mdb;Uid=Admin;Pwd=;",
+              "{Microsoft Access Driver (*.mdb)};Dbq=servername.mdb;Uid=Admin;Pwd=;",
             connectionType: ConnectionStringType.database
           }
         ]
