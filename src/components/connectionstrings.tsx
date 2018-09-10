@@ -64,7 +64,7 @@ export class ConnectionStrings extends Component<
             <div className="input-group-prepend">
               <label className="input-group-text" htmlFor="inputGroupSelect01">
                 Select Connection Type
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </label>
             </div>
             <select
@@ -88,6 +88,9 @@ export class ConnectionStrings extends Component<
       this.state.databaseProvider,
       this.state.connectionType
     );
+    if (stringsList.length === 0) {
+      return <p>No Connection strings defined.</p>;
+    }
     return stringsList.map((cs, i) => (
       <ConnectionStringPanel
         key={"strings_" + i}
@@ -98,8 +101,8 @@ export class ConnectionStrings extends Component<
   }
 
   private displayDatabaseProvidersList() {
-    return this.state.connStrings.map(cs => (
-      <option value={cs.databaseName} key={cs.databaseName}>
+    return this.state.connStrings.map((cs, i) => (
+      <option value={cs.databaseName} key={"options_" + i}>
         {cs.databaseName}
       </option>
     ));
