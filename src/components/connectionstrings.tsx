@@ -15,6 +15,7 @@ export interface IConnectionStringComponentState {
   connStrings: IConnectionStringProvider[];
   databaseProvider: string;
   connectionType: string;
+  databaseServerName: string;
 }
 export class ConnectionStrings extends Component<
   {},
@@ -28,11 +29,15 @@ export class ConnectionStrings extends Component<
     this.state = {
       connStrings: this.getAllConnectionStrings(),
       databaseProvider: "",
-      connectionType: ""
+      connectionType: "",
+      databaseServerName: ""
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
     this.selectedConnectionStringType = this.selectedConnectionStringType.bind(
+      this
+    );
+    this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(
       this
     );
   }
@@ -78,6 +83,22 @@ export class ConnectionStrings extends Component<
             </select>
           </div>
         </div>
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="basic-addon3">
+              Enter Database Server Name
+            </span>
+          </div>
+          <input
+            type="text"
+            className="form-control"
+            id="basic-url"
+            aria-describedby="basic-addon3"
+            value={this.state.databaseServerName}
+            onChange={this.handleDatabaseServerNameChange}
+            placeholder={"database server name"}
+          />
+        </div>
         {displayConnectionStringsRelatedToProviders}
       </React.Fragment>
     );
@@ -96,6 +117,7 @@ export class ConnectionStrings extends Component<
         key={"strings_" + i}
         databaseProvider={cs.description}
         connectionString={cs.connectionString}
+        databaseServerName={this.state.databaseServerName}
       />
     ));
   }
@@ -107,7 +129,12 @@ export class ConnectionStrings extends Component<
       </option>
     ));
   }
-
+  private handleDatabaseServerNameChange(e: any) {
+    const dbServerName = e.target.value;
+    this.setState({
+      databaseServerName: dbServerName
+    });
+  }
   private selectedDatabaseProvider(e: any) {
     const selectedValue = e.target.value;
     const getConnectionTypeDrpDwnList: HTMLSelectElement = document.getElementById(
@@ -117,32 +144,35 @@ export class ConnectionStrings extends Component<
     if (selectedValue === "") {
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
-        databaseProvider: ""
+        databaseProvider: "",
+        databaseServerName: ""
       });
     } else {
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: selectedValue,
-        connectionType: ""
+        connectionType: "",
+        databaseServerName: ""
       });
     }
   }
 
   private selectedConnectionStringType(e: any) {
     const selectedValue = e.target.value;
-    // tslint:disable-next-line:no-console
-    // console.log(selectedValue);
-    // validate the selectedValue
+
     if (selectedValue === "") {
       this.setState({
-        connectionType: ""
+        connectionType: "",
+        databaseServerName: ""
       });
     } else {
       this.setState({
-        connectionType: selectedValue
+        connectionType: selectedValue,
+        databaseServerName: ""
       });
     }
   }
+
   private getAllConnectionStrings(): IConnectionStringProvider[] {
     const connStrings = this.InitialiseConnectionStringJsonClass;
     return connStrings.getAllConnectionStrings();
