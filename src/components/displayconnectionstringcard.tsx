@@ -10,6 +10,8 @@ import { IConnectionStringDetails } from "../services/stringdata";
 export interface IConnectionStringProps {
   databaseProvider: string;
   connectionString: string;
+
+  databaseServerName: string;
 }
 
 export interface IConnectionStringPanelState {
@@ -34,7 +36,10 @@ class ConnectionStringPanel extends Component<
             </div>
             <div className="card-body">
               <code id={this.props.connectionString}>
-                {this.props.connectionString}
+                {this.props.connectionString.replace(
+                  "rajivsservername",
+                  this.props.databaseServerName
+                )}
               </code>
             </div>
           </div>
