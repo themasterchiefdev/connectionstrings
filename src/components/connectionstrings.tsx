@@ -41,13 +41,13 @@ export class ConnectionStrings extends Component<
       <React.Fragment>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
-            <label className="input-group-text" htmlFor="inputGroupSelect01">
+            <label className="input-group-text" htmlFor="databaseProviderList">
               Select the Database Provider
             </label>
           </div>
           <select
             className="custom-select"
-            id="inputGroupSelect01"
+            id="databaseProviderList"
             onChange={this.selectedDatabaseProvider}
           >
             <option value="">Choose...</option>
