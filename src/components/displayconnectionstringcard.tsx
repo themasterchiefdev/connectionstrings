@@ -5,12 +5,11 @@
 
 import * as React from "react";
 import { Component } from "react";
-import ConnectionStringsJSON, {
-  IConnectionStringDetails
-} from "../services/stringdata";
+import { IConnectionStringDetails } from "../services/stringdata";
 
 export interface IConnectionStringProps {
   databaseProvider: string;
+  connectionString: string;
 }
 
 export interface IConnectionStringPanelState {
@@ -23,50 +22,24 @@ class ConnectionStringPanel extends Component<
 > {
   constructor(props: IConnectionStringProps) {
     super(props);
-    this.getConnStringDetails = this.getConnStringDetails.bind(this);
-    // const dbProvider = this.props.databaseProvider;
-    this.state = {
-      // connProperties: this.getConnStringDetails("Excel")
-      connProperties: this.getConnStringDetails(this.props.databaseProvider)
-    };
   }
 
   public render() {
     // tslint:disable-next-line:no-console
-    console.log("Hello!! " + this.props.databaseProvider);
-    // tslint:disable-next-line:no-console
+    // console.log("Hello!! " + this.props.databaseProvider);
 
     return (
-      <div className="card">
-        {this.state.connProperties.map(cs => (
-          <React.Fragment key={"cs_" + cs.description}>
+      <React.Fragment>
+        <div className="add-padding-bottom">
+          <div className="card">
             <div className="card-header text-left font-weight-bold">
-              {cs.description}
-            </div>
-            <div className="card-body">
-              {cs.connectionString}
-              &nbsp;
               {this.props.databaseProvider}
             </div>
-          </React.Fragment>
-        ))}
-      </div>
+            <div className="card-body">{this.props.connectionString}</div>
+          </div>
+        </div>
+      </React.Fragment>
     );
-  }
-
-  private getConnStringDetails(dbProvider: string): IConnectionStringDetails[] {
-    const s = new ConnectionStringsJSON();
-    // tslint:disable-next-line:no-console
-    console.log("Conn " + dbProvider);
-    // this.setState({
-    //   connProperties:s.getConnectionStringDetails(dbProvider)
-    // });
-    // this.setState(() => {
-    //   return (
-    //     connProperties: s.getConnectionStringDetails
-    //   )
-    // });
-    return s.getConnectionStringDetails(dbProvider);
   }
 }
 

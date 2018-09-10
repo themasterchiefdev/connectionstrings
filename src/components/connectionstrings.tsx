@@ -6,6 +6,7 @@
 import * as React from "react";
 import { Component } from "react";
 import ConnectionStringsJSON, {
+  IConnectionStringDetails,
   IConnectionStringProvider
 } from "../services/stringdata";
 import ConnectionStringPanel from "./displayconnectionstringcard";
@@ -18,7 +19,8 @@ export class ConnectionStrings extends Component<
   {},
   IConnectionStringComponentState
 > {
-  // has no props
+  private readonly InitialiseConnectionStringJsonClass = new ConnectionStringsJSON();
+
   constructor(props: {}) {
     super(props);
     // get the state from the private function
@@ -35,6 +37,15 @@ export class ConnectionStrings extends Component<
       <option value={cs.databaseName} key={cs.databaseName}>
         {cs.databaseName}
       </option>
+    ));
+    const pro = this.getConnectionStringsFortheProvider(
+      this.state.databaseProvider
+    ).map((cs, i) => (
+      <ConnectionStringPanel
+        key={"strings_" + i}
+        databaseProvider={cs.description}
+        connectionString={cs.connectionString}
+      />
     ));
     return (
       <React.Fragment>
@@ -53,7 +64,7 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
-        <ConnectionStringPanel databaseProvider={this.state.databaseProvider} />
+        {pro}
       </React.Fragment>
     );
   }
@@ -62,22 +73,25 @@ export class ConnectionStrings extends Component<
     const selectedValue = e.target.value;
     // validate the selectedValue
     if (selectedValue === "") {
-      // tslint:disable-next-line:no-console
-      console.log("Please select a database provider");
       this.setState({
         databaseProvider: ""
       });
     } else {
-      // tslint:disable-next-line:no-console
-      // console.log("Option Selected " + selectedValue);
-
       this.setState({
         databaseProvider: selectedValue
       });
     }
   }
+
   private getAllConnectionStrings(): IConnectionStringProvider[] {
-    const connStrings = new ConnectionStringsJSON();
+    const connStrings = this.InitialiseConnectionStringJsonClass;
     return connStrings.getAllConnectionStrings();
+  }
+
+  private getConnectionStringsFortheProvider(
+    dbprovider: string
+  ): IConnectionStringDetails[] {
+    const connStrings = this.InitialiseConnectionStringJsonClass;
+    return connStrings.getConnectionStringDetails(dbprovider);
   }
 }
