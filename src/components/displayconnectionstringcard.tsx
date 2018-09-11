@@ -7,13 +7,20 @@ import * as React from "react";
 import { Component } from "react";
 import { IConnectionStringDetails } from "../services/stringdata";
 
+/**
+ * Defines the ConnectionStringPanel props
+ * @interface IConnectionStringProps
+ */
 export interface IConnectionStringProps {
   databaseProvider: string;
   connectionString: string;
 
   databaseServerName: string;
 }
-
+/**
+ * Defines the ConnectionStringPanel state
+ * @interface IConnectionStringPanelState
+ */
 export interface IConnectionStringPanelState {
   connProperties: IConnectionStringDetails[];
 }
@@ -39,7 +46,7 @@ class ConnectionStringPanel extends Component<
                 {this.props.connectionString.replace(
                   "rajivsservername",
                   this.props.databaseServerName
-                )}
+                ).trim()}
               </code>
             </div>
           </div>
