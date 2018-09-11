@@ -11,21 +11,27 @@ import ConnectionStringsJSON, {
 } from "../services/stringdata";
 import ConnectionStringPanel from "./displayconnectionstringcard";
 
+/**
+ * Defines the state of the Component
+ * @interface IConnectionStringComponentState
+ */
 export interface IConnectionStringComponentState {
   connStrings: IConnectionStringProvider[];
   databaseProvider: string;
   connectionType: string;
   databaseServerName: string;
 }
+
 export class ConnectionStrings extends Component<
   {},
   IConnectionStringComponentState
 > {
+  // Initialize the JSON class from which the connections strings will be returned
   private readonly InitialiseConnectionStringJsonClass = new ConnectionStringsJSON();
 
   constructor(props: {}) {
     super(props);
-    // get the state from the private function
+
     this.state = {
       connStrings: this.getAllConnectionStrings(),
       databaseProvider: "",
@@ -34,9 +40,11 @@ export class ConnectionStrings extends Component<
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
+    // bind the connection type event handler
     this.selectedConnectionStringType = this.selectedConnectionStringType.bind(
       this
     );
+    // bind the connection type event handler
     this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(
       this
     );
@@ -104,6 +112,8 @@ export class ConnectionStrings extends Component<
     );
   }
 
+  //#region Set-up HTML UI elements
+  // this would display the connection strings based on the provider selected
   private displayConnectionStringsBasedOnProvider() {
     const stringsList = this.getConnectionStringsFortheProvider(
       this.state.databaseProvider,
@@ -122,6 +132,7 @@ export class ConnectionStrings extends Component<
     ));
   }
 
+  // initialize the database provider drop down list
   private displayDatabaseProvidersList() {
     return this.state.connStrings.map((cs, i) => (
       <option value={cs.databaseName} key={"options_" + i}>
@@ -129,12 +140,16 @@ export class ConnectionStrings extends Component<
       </option>
     ));
   }
+
+  // get the database name from the text box and set it to databaseServerName
+  // also prevent adding white spaces to the server name
   private handleDatabaseServerNameChange(e: any) {
     const dbServerName = e.target.value;
     this.setState({
-      databaseServerName: dbServerName
+      databaseServerName: dbServerName.toString().trim()
     });
   }
+  // fire the onChange when database provider changes
   private selectedDatabaseProvider(e: any) {
     const selectedValue = e.target.value;
     const getConnectionTypeDrpDwnList: HTMLSelectElement = document.getElementById(
@@ -157,27 +172,42 @@ export class ConnectionStrings extends Component<
     }
   }
 
+  // fire the onChange when connection type changes
   private selectedConnectionStringType(e: any) {
     const selectedValue = e.target.value;
 
     if (selectedValue === "") {
       this.setState({
-        connectionType: "",
-       
+        connectionType: ""
       });
     } else {
       this.setState({
-        connectionType: selectedValue,
-       
+        connectionType: selectedValue
       });
     }
   }
 
+  //#endregion
+
+  //#region Interact with services
+
+  /**
+   * Gets all the connection string values
+   * @returns IConnectionStringProvider[]
+   */
   private getAllConnectionStrings(): IConnectionStringProvider[] {
     const connStrings = this.InitialiseConnectionStringJsonClass;
     return connStrings.getAllConnectionStrings();
   }
 
+  /**
+   * Gets the list of connection strings based on the dbProvider and connectionType
+   * @param dbprovider string
+   * @param connectionType string
+   * @returns -- IConnectionStringDetails[]
+   * @example
+   * this.getConnectionStringsFortheProvider(databaseProvider,connectionType);
+   */
   private getConnectionStringsFortheProvider(
     dbprovider: string,
     connectionType: string
@@ -188,4 +218,6 @@ export class ConnectionStrings extends Component<
       connectionType
     );
   }
+
+  //#endregion
 }
