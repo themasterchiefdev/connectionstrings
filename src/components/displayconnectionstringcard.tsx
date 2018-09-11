@@ -46,7 +46,7 @@ class ConnectionStringPanel extends Component<
                 {this.props.connectionString.replace(
                   "rajivsservername",
                   this.props.databaseServerName
-                ).trim()}
+                )}
               </code>
             </div>
           </div>

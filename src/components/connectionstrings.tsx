@@ -142,6 +142,7 @@ export class ConnectionStrings extends Component<
   }
 
   // get the database name from the text box and set it to databaseServerName
+  // also prevent adding white spaces to the server name
   private handleDatabaseServerNameChange(e: any) {
     const dbServerName = e.target.value;
     this.setState({
