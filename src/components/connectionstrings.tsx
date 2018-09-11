@@ -163,12 +163,12 @@ export class ConnectionStrings extends Component<
     if (selectedValue === "") {
       this.setState({
         connectionType: "",
-        databaseServerName: ""
+       
       });
     } else {
       this.setState({
         connectionType: selectedValue,
-        databaseServerName: ""
+       
       });
     }
   }
