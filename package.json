@@ -1,7 +1,7 @@
 {
 	"name": "Build-Connection-Strings",
 	"version": "0.1.0",
-	"private": true,
+	"private": false,
 	"dependencies": {
 		"@githubprimer/octicons-react": "^8.1.0",
 		"bootstrap": "^4.1.3",
@@ -27,5 +27,6 @@
 		"@types/react-dom": "^16.0.7",
 		"typescript": "^3.0.3"
 	},
-	"homepage": "https://yvrkarthik.github.io/connectionstrings/"
+	"homepage": "https://yvrkarthik.github.io/connectionstrings/",
+	"license": "MIT"
 }
