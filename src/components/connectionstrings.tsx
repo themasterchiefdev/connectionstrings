@@ -84,8 +84,11 @@ export class ConnectionStrings extends Component<
             <option value="">Choose...</option>
             {databaseProvidersList}
           </select>
+          <button className="btn btn-info" type="button" id="button-addon2">
+            Reset
+          </button>
         </div>
-
+      
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
         />
