@@ -19,6 +19,7 @@ export enum InputFieldTypeEnum {
  * @property inputValue -- sets the value of the textbox
  * @property inputFieldType -- This is just for identifying the item in the parent component
  * @property labelValue -- Sets the value of the input group
+ * @property isDisabled -- sets the state of the component
  */
 interface IDatabaseInputFieldProps {
   onValueChange: any;
@@ -26,6 +27,7 @@ interface IDatabaseInputFieldProps {
   inputValue: string;
   inputFieldType: InputFieldTypeEnum;
   labelValue: string;
+  isDisabled: boolean;
 }
 
 /**
@@ -50,6 +52,7 @@ export function DatabaseInputField(props: IDatabaseInputFieldProps) {
           value={props.inputValue}
           onChange={props.onValueChange}
           placeholder={props.placeHolder}
+          disabled={props.isDisabled}
         />
       </div>
     </React.Fragment>
