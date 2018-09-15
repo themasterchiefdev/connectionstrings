@@ -9,10 +9,11 @@ import ConnectionStringsJSON, {
   IConnectionStringDetails,
   IConnectionStringProvider
 } from "../services/stringdata";
+import ConnectionStringCard from "./connectionstringcard";
+// import ConnectionStringCard from "./connectionstringcard";
 import ConnectionType from "./connectiontype";
 import { DatabaseInputField, InputFieldTypeEnum } from "./databaseinputfield";
 import DatabaseProviderList from "./databaseproviderlist";
-import ConnectionStringCard from "./displayconnectionstringcard";
 
 /**
  * Defines the state of the Component
@@ -75,7 +76,7 @@ export class ConnectionStrings extends Component<
     // const databaseProvidersList = this.displayDatabaseProvidersList();
 
     // loop through and display all connection strings based on the database provider selected.
-    const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
+    // const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
 
     // Used to render the database login and password input fields
     const isTrustedConnection = this.state.connectionType;
@@ -136,36 +137,50 @@ export class ConnectionStrings extends Component<
         ) : (
           ""
         )}
-        {displayConnectionStringsRelatedToProviders}
+        {/* {displayConnectionStringsRelatedToProviders} */}
+        <ConnectionStringCard
+          connectionString={this.getConnectionStringsBasedOnTheProvider()}
+          databaseServerName={this.state.databaseServerName}
+          databaseLoginName={this.state.databaseLogin}
+          databaseLoginPassword={this.state.databasePassword}
+          databaseName={this.state.databaseName}
+        />
       </React.Fragment>
     );
   }
 
   //#region Set-up HTML UI elements
   // this would display the connection strings based on the provider selected
-  private displayConnectionStringsBasedOnProvider() {
+  // private displayConnectionStringsBasedOnProvider() {
+  //   const stringsList = this.getConnectionStringsFortheProvider(
+  //     this.state.databaseProvider,
+  //     this.state.connectionType
+  //   );
+  //   // tslint:disable-next-line:no-console
+  //   // console.log(stringsList.sort());
+  //   if (stringsList.length === 0) {
+  //     return <p>No Connection strings defined.</p>;
+  //   }
+  //   return stringsList.map((cs, i) => (
+  //     <ConnectionStringCard
+  //       key={"strings_" + i}
+  //       databaseProvider={cs.description}
+  //       connectionString={cs.connectionString}
+  //       databaseServerName={this.state.databaseServerName}
+  //       databaseLoginName={this.state.databaseLogin}
+  //       databaseLoginPassword={this.state.databasePassword}
+  //       databaseName={this.state.databaseName}
+  //     />
+  //   ));
+  // }
+  // get the connection strings based on the provider selected
+  private getConnectionStringsBasedOnTheProvider() {
     const stringsList = this.getConnectionStringsFortheProvider(
       this.state.databaseProvider,
       this.state.connectionType
     );
-    // tslint:disable-next-line:no-console
-    // console.log(stringsList.sort());
-    if (stringsList.length === 0) {
-      return <p>No Connection strings defined.</p>;
-    }
-    return stringsList.map((cs, i) => (
-      <ConnectionStringCard
-        key={"strings_" + i}
-        databaseProvider={cs.description}
-        connectionString={cs.connectionString}
-        databaseServerName={this.state.databaseServerName}
-        databaseLoginName={this.state.databaseLogin}
-        databaseLoginPassword={this.state.databasePassword}
-        databaseName={this.state.databaseName}
-      />
-    ));
+    return stringsList;
   }
-
   // get the database login name
   private setDatabaseLoginName(e: any) {
     const loginName = e.target.value;
