@@ -9,7 +9,10 @@ import ConnectionStringsJSON, {
   IConnectionStringDetails,
   IConnectionStringProvider
 } from "../services/stringdata";
+import ConnectionType from "./connectiontype";
 import ConnectionStringPanel from "./displayconnectionstringcard";
+import ServerName from "./servername";
+import { Username } from "./username";
 
 /**
  * Defines the state of the Component
@@ -72,41 +75,16 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
-        <div>
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <label className="input-group-text" htmlFor="inputGroupSelect01">
-                Select Connection Type
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </label>
-            </div>
-            <select
-              className="custom-select"
-              id="connectiontypeselectgroup"
-              onChange={this.selectedConnectionStringType}
-            >
-              <option value="">Choose...</option>
-              <option value="Trusted">Trusted Connection</option>
-              <option value="Database">Database Login</option>
-            </select>
-          </div>
-        </div>
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon3">
-              Enter Database Server Name
-            </span>
-          </div>
-          <input
-            type="text"
-            className="form-control"
-            id="basic-url"
-            aria-describedby="basic-addon3"
-            value={this.state.databaseServerName}
-            onChange={this.handleDatabaseServerNameChange}
-            placeholder={"database server name"}
-          />
-        </div>
+
+        <ConnectionType
+          selectedConnectionStringType={this.selectedConnectionStringType}
+        />
+
+        <ServerName
+          databaseServerName={this.state.databaseServerName}
+          handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
+        />
+        <Username databaseLogin={"test"} />
         {displayConnectionStringsRelatedToProviders}
       </React.Fragment>
     );
