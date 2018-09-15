@@ -27,8 +27,10 @@ export interface IConnectionStringProps {
 export interface IConnectionStringPanelState {
   connProperties: IConnectionStringDetails[];
 }
-
-class ConnectionStringPanel extends Component<
+export interface IComponentStyle {
+  fontSize: string;
+}
+class ConnectionStringCard extends Component<
   IConnectionStringProps,
   IConnectionStringPanelState
 > {
@@ -45,7 +47,7 @@ class ConnectionStringPanel extends Component<
               {this.props.databaseProvider}
             </div>
             <div className="card-body">
-              <code id={this.props.connectionString}>
+              <code id={this.props.connectionString} className="code-font">
                 {this.props.connectionString
                   .replace("rajivsservername", this.props.databaseServerName)
                   .replace("rajivsusername", this.props.databaseLoginName)
@@ -59,4 +61,4 @@ class ConnectionStringPanel extends Component<
   }
 }
 
-export default ConnectionStringPanel;
+export default ConnectionStringCard;

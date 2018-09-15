@@ -1,7 +1,7 @@
 import * as React from "react";
 export interface IServerNameProps { 
   handleDatabaseServerNameChange: any;
-  databaseServerName: string;
+  databaseServerName: string; 
 }
 
 class ServerName extends React.Component<IServerNameProps, {}> {

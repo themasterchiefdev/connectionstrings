@@ -11,7 +11,7 @@ import ConnectionStringsJSON, {
 } from "../services/stringdata";
 import ConnectionType from "./connectiontype";
 import { Credential, CredentialFieldTypeEnum } from "./credentials";
-import ConnectionStringPanel from "./displayconnectionstringcard";
+import ConnectionStringCard from "./displayconnectionstringcard";
 import ServerName from "./servername";
 
 /**
@@ -132,7 +132,7 @@ export class ConnectionStrings extends Component<
       return <p>No Connection strings defined.</p>;
     }
     return stringsList.map((cs, i) => (
-      <ConnectionStringPanel
+      <ConnectionStringCard
         key={"strings_" + i}
         databaseProvider={cs.description}
         connectionString={cs.connectionString}
