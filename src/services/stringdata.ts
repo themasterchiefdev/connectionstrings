@@ -176,7 +176,8 @@ export default class ConnectionStringsJSON {
             connectionType: ConnectionStringType.trusted
           }
         ]
-      }
+      },
+     
     ];
     return connectionStrings;
   }
