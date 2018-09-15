@@ -85,12 +85,13 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
+
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
         />
 
         <DatabaseInputField
-          labelValue={"Enter Server/Instance Name"}
+          labelValue={`Enter Server/Instance Name\t\t`}
           placeHolder={"database server name"}
           onValueChange={this.handleDatabaseServerNameChange}
           inputValue={this.state.databaseServerName}
