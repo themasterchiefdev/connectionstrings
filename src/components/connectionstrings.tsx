@@ -10,7 +10,6 @@ import ConnectionStringsJSON, {
   IConnectionStringProvider
 } from "../services/stringdata";
 import ConnectionStringCard from "./connectionstringcard";
-// import ConnectionStringCard from "./connectionstringcard";
 import ConnectionType from "./connectiontype";
 import { DatabaseInputField, InputFieldTypeEnum } from "./databaseinputfield";
 import DatabaseProviderList from "./databaseproviderlist";
@@ -72,12 +71,6 @@ export class ConnectionStrings extends Component<
   }
 
   public render(): JSX.Element {
-    // Loop through the JSON data and populate the drop down list with DB providers.
-    // const databaseProvidersList = this.displayDatabaseProvidersList();
-
-    // loop through and display all connection strings based on the database provider selected.
-    // const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
-
     // Used to render the database login and password input fields
     const isTrustedConnection = this.state.connectionType;
 
