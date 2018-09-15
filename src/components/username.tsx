@@ -1,8 +1,9 @@
 import * as React from "react";
 
 interface IUsernameProps {
-  // databaseLogin: string;
+  onValueChange: any;
   placeHolder: string;
+  loginName: string;
 }
 
 export function Username(props: IUsernameProps) {
@@ -20,8 +21,8 @@ export function Username(props: IUsernameProps) {
           className="form-control"
           id="basic-url"
           aria-describedby="basic-addon3"
-          // value={props.databaseLogin}
-          // onChange={this.handleDatabaseServerNameChange}
+          value={props.loginName}
+          onChange={props.onValueChange}
           placeholder={props.placeHolder}
         />
       </div>

@@ -23,6 +23,7 @@ export interface IConnectionStringComponentState {
   databaseProvider: string;
   connectionType: string;
   databaseServerName: string;
+  databaseLogin: string;
 }
 
 export class ConnectionStrings extends Component<
@@ -39,7 +40,8 @@ export class ConnectionStrings extends Component<
       connStrings: this.getAllConnectionStrings(),
       databaseProvider: "",
       connectionType: "",
-      databaseServerName: ""
+      databaseServerName: "",
+      databaseLogin: ""
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
@@ -51,6 +53,7 @@ export class ConnectionStrings extends Component<
     this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(
       this
     );
+    this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
   }
 
   public render(): JSX.Element {
@@ -84,9 +87,13 @@ export class ConnectionStrings extends Component<
           databaseServerName={this.state.databaseServerName}
           handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
         />
-
+        {/* Only display the Username textbox if the connection type is database*/}
         {isTrustedConnection === "Database" ? (
-          <Username placeHolder={"Login username"} />
+          <Username
+            placeHolder={"Login username"}
+            onValueChange={this.setDatabaseLoginName}
+            loginName={this.state.databaseLogin}
+          />
         ) : (
           ""
         )}
@@ -123,7 +130,10 @@ export class ConnectionStrings extends Component<
       </option>
     ));
   }
-
+  private setDatabaseLoginName(e: any) {
+    const loginName = e.target.value;
+    this.setState({ databaseLogin: loginName.toString().trim() });
+  }
   // get the database name from the text box and set it to databaseServerName
   // also prevent adding white spaces to the server name
   private handleDatabaseServerNameChange(e: any) {

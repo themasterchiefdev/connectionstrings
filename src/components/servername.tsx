@@ -1,5 +1,5 @@
 import * as React from "react";
-export interface IServerNameProps {
+export interface IServerNameProps { 
   handleDatabaseServerNameChange: any;
   databaseServerName: string;
 }
