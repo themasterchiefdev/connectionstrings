@@ -10,9 +10,8 @@ import ConnectionStringsJSON, {
   IConnectionStringProvider
 } from "../services/stringdata";
 import ConnectionType from "./connectiontype";
-import { Credential, CredentialFieldTypeEnum } from "./credentials";
+import { DatabaseInputField, InputFieldTypeEnum } from "./databaseinputfield";
 import ConnectionStringCard from "./displayconnectionstringcard";
-import ServerName from "./servername";
 
 /**
  * Defines the state of the Component
@@ -25,6 +24,7 @@ export interface IConnectionStringComponentState {
   databaseServerName: string;
   databaseLogin: string;
   databasePassword: string;
+  databaseName: string;
 }
 
 export class ConnectionStrings extends Component<
@@ -43,7 +43,8 @@ export class ConnectionStrings extends Component<
       connectionType: "",
       databaseServerName: "",
       databaseLogin: "",
-      databasePassword: ""
+      databasePassword: "",
+      databaseName: ""
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
@@ -58,6 +59,7 @@ export class ConnectionStrings extends Component<
     this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
 
     this.setDatabaseLoginPassword = this.setDatabaseLoginPassword.bind(this);
+    this.setDatabaseName = this.setDatabaseName.bind(this);
   }
 
   public render(): JSX.Element {
@@ -83,35 +85,46 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
+
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
         />
 
-        <ServerName
-          databaseServerName={this.state.databaseServerName}
-          handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
+        <DatabaseInputField
+          labelValue={`Enter Server/Instance Name\t\t`}
+          placeHolder={"database server name"}
+          onValueChange={this.handleDatabaseServerNameChange}
+          inputValue={this.state.databaseServerName}
+          inputFieldType={InputFieldTypeEnum.servername}
+        />
+        <DatabaseInputField
+          labelValue={"Enter Database Name"}
+          placeHolder={"database name"}
+          onValueChange={this.setDatabaseName}
+          inputValue={this.state.databaseName}
+          inputFieldType={InputFieldTypeEnum.servername}
         />
 
         {/* Only display the Username textbox if the connection type is database*/}
         {isTrustedConnection === "Database" ? (
-          <Credential
-            labelValue={"Enter Username"}
+          <DatabaseInputField
+            labelValue={"Enter Login"}
             placeHolder={"Login username"}
             onValueChange={this.setDatabaseLoginName}
-            credentialValue={this.state.databaseLogin}
-            credentialFieldType={CredentialFieldTypeEnum.login}
+            inputValue={this.state.databaseLogin}
+            inputFieldType={InputFieldTypeEnum.login}
           />
         ) : (
           ""
         )}
         {/* Only display the Username textbox if the connection type is database*/}
         {isTrustedConnection === "Database" ? (
-          <Credential
+          <DatabaseInputField
             labelValue={"Enter Password"}
             placeHolder={"Login password"}
             onValueChange={this.setDatabaseLoginPassword}
-            credentialValue={this.state.databasePassword}
-            credentialFieldType={CredentialFieldTypeEnum.password}
+            inputValue={this.state.databasePassword}
+            inputFieldType={InputFieldTypeEnum.password}
           />
         ) : (
           ""
@@ -139,6 +152,7 @@ export class ConnectionStrings extends Component<
         databaseServerName={this.state.databaseServerName}
         databaseLoginName={this.state.databaseLogin}
         databaseLoginPassword={this.state.databasePassword}
+        databaseName={this.state.databaseName}
       />
     ));
   }
@@ -156,11 +170,17 @@ export class ConnectionStrings extends Component<
     const loginName = e.target.value;
     this.setState({ databaseLogin: loginName.toString().trim() });
   }
-  // get the database login name
+  // get the database login password
   private setDatabaseLoginPassword(e: any) {
     const loginPassword = e.target.value;
     this.setState({ databasePassword: loginPassword.toString().trim() });
   }
+  // get the database instance name password
+  private setDatabaseName(e: any) {
+    const instanceName = e.target.value;
+    this.setState({ databaseName: instanceName.toString().trim() });
+  }
+
   // get the database name from the text box and set it to databaseServerName
   // also prevent adding white spaces to the server name
   private handleDatabaseServerNameChange(e: any) {
@@ -182,7 +202,8 @@ export class ConnectionStrings extends Component<
         databaseProvider: "",
         databaseServerName: "",
         databaseLogin: "",
-        databasePassword: ""
+        databasePassword: "",
+        databaseName: ""
       });
     } else {
       getConnectionTypeDrpDwnList.selectedIndex = 0;
@@ -191,7 +212,8 @@ export class ConnectionStrings extends Component<
         connectionType: "",
         databaseServerName: "",
         databaseLogin: "",
-        databasePassword: ""
+        databasePassword: "",
+        databaseName: ""
       });
     }
   }
