@@ -101,6 +101,7 @@ export class ConnectionStrings extends Component<
 
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
+          isDisabled={this.state.databaseProvider===""}
         />
 
         <DatabaseInputField

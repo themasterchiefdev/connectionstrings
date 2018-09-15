@@ -2,6 +2,7 @@ import * as React from "react";
 // import { Component } from "react";
 export interface IConnectionTypeProps {
   selectedConnectionStringType: any;
+  isDisabled: boolean;
 }
 
 /**
@@ -24,6 +25,7 @@ const ConnectionType: React.SFC<IConnectionTypeProps> = (
           className="custom-select"
           id="connectiontypeselectgroup"
           onChange={props.selectedConnectionStringType}
+          disabled={props.isDisabled}
         >
           <option value="">Choose...</option>
           <option value="Trusted">Trusted Connection</option>
