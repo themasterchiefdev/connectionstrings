@@ -101,7 +101,7 @@ export class ConnectionStrings extends Component<
 
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
-          isDisabled={this.state.databaseProvider===""}
+          isDisabled={this.state.databaseProvider === ""}
         />
 
         <DatabaseInputField
@@ -110,6 +110,7 @@ export class ConnectionStrings extends Component<
           onValueChange={this.handleDatabaseServerNameChange}
           inputValue={this.state.databaseServerName}
           inputFieldType={InputFieldTypeEnum.servername}
+          isDisabled={this.state.connectionType === ""}
         />
         <DatabaseInputField
           labelValue={"Enter Database Name"}
@@ -117,6 +118,7 @@ export class ConnectionStrings extends Component<
           onValueChange={this.setDatabaseName}
           inputValue={this.state.databaseName}
           inputFieldType={InputFieldTypeEnum.servername}
+          isDisabled={this.state.databaseServerName === ""}
         />
 
         {/* Only display the Username textbox if the connection type is database*/}
@@ -127,6 +129,7 @@ export class ConnectionStrings extends Component<
             onValueChange={this.setDatabaseLoginName}
             inputValue={this.state.databaseLogin}
             inputFieldType={InputFieldTypeEnum.login}
+            isDisabled={this.state.databaseName === ""}
           />
         ) : (
           ""
@@ -139,6 +142,7 @@ export class ConnectionStrings extends Component<
             onValueChange={this.setDatabaseLoginPassword}
             inputValue={this.state.databasePassword}
             inputFieldType={InputFieldTypeEnum.password}
+            isDisabled={this.state.databaseLogin === ""}
           />
         ) : (
           ""
