@@ -59,7 +59,10 @@ export class ConnectionStrings extends Component<
     this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
 
     this.setDatabaseLoginPassword = this.setDatabaseLoginPassword.bind(this);
+
     this.setDatabaseName = this.setDatabaseName.bind(this);
+
+    this.handleReset = this.handleReset.bind(this);
   }
 
   public render(): JSX.Element {
@@ -84,11 +87,16 @@ export class ConnectionStrings extends Component<
             <option value="">Choose...</option>
             {databaseProvidersList}
           </select>
-          <button className="btn btn-info" type="button" id="button-addon2">
+          <button
+            className="btn btn-info"
+            type="button"
+            id="button-addon2"
+            onClick={this.handleReset}
+          >
             Reset
           </button>
         </div>
-      
+
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
         />
@@ -184,8 +192,28 @@ export class ConnectionStrings extends Component<
     this.setState({ databaseName: instanceName.toString().trim() });
   }
 
-  // get the database name from the text box and set it to databaseServerName
-  // also prevent adding white spaces to the server name
+  // reset all the fields
+  private handleReset(e: any) {
+    e.preventDefault();
+    // tslint:disable-next-line:no-console
+    console.log("Button Clicked");
+    const getConnectionTypeDrpDwnList: HTMLSelectElement = document.getElementById(
+      "connectiontypeselectgroup"
+    ) as HTMLSelectElement;
+    const getDatabaseProviderDrpDwnList: HTMLSelectElement = document.getElementById(
+      "databaseProviderList"
+    ) as HTMLSelectElement;
+
+    this.setState({
+      databaseLogin: "",
+      databaseName: "",
+      databasePassword: "",
+      databaseProvider: "",
+      databaseServerName: ""
+    });
+    getConnectionTypeDrpDwnList.selectedIndex = 0;
+    getDatabaseProviderDrpDwnList.selectedIndex = 0;
+  }
   private handleDatabaseServerNameChange(e: any) {
     const dbServerName = e.target.value;
     this.setState({
