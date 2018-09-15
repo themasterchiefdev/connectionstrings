@@ -151,29 +151,7 @@ export class ConnectionStrings extends Component<
 
   //#region Set-up HTML UI elements
   // this would display the connection strings based on the provider selected
-  // private displayConnectionStringsBasedOnProvider() {
-  //   const stringsList = this.getConnectionStringsFortheProvider(
-  //     this.state.databaseProvider,
-  //     this.state.connectionType
-  //   );
-  //   // tslint:disable-next-line:no-console
-  //   // console.log(stringsList.sort());
-  //   if (stringsList.length === 0) {
-  //     return <p>No Connection strings defined.</p>;
-  //   }
-  //   return stringsList.map((cs, i) => (
-  //     <ConnectionStringCard
-  //       key={"strings_" + i}
-  //       databaseProvider={cs.description}
-  //       connectionString={cs.connectionString}
-  //       databaseServerName={this.state.databaseServerName}
-  //       databaseLoginName={this.state.databaseLogin}
-  //       databaseLoginPassword={this.state.databasePassword}
-  //       databaseName={this.state.databaseName}
-  //     />
-  //   ));
-  // }
-  // get the connection strings based on the provider selected
+
   private getConnectionStringsBasedOnTheProvider() {
     const stringsList = this.getConnectionStringsFortheProvider(
       this.state.databaseProvider,
