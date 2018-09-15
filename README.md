@@ -1,3 +1,5 @@
+To create new user story/backlog item,please use this template [New Backlog Item](https://github.com/yvrkarthik/connectionstrings/issues/new?template=user-story---.md&labels=backlog&title-New+user+story)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

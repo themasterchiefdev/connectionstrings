@@ -9,7 +9,9 @@ import ConnectionStringsJSON, {
   IConnectionStringDetails,
   IConnectionStringProvider
 } from "../services/stringdata";
-import ConnectionStringPanel from "./displayconnectionstringcard";
+import ConnectionType from "./connectiontype";
+import { DatabaseInputField, InputFieldTypeEnum } from "./databaseinputfield";
+import ConnectionStringCard from "./displayconnectionstringcard";
 
 /**
  * Defines the state of the Component
@@ -20,6 +22,9 @@ export interface IConnectionStringComponentState {
   databaseProvider: string;
   connectionType: string;
   databaseServerName: string;
+  databaseLogin: string;
+  databasePassword: string;
+  databaseName: string;
 }
 
 export class ConnectionStrings extends Component<
@@ -36,7 +41,10 @@ export class ConnectionStrings extends Component<
       connStrings: this.getAllConnectionStrings(),
       databaseProvider: "",
       connectionType: "",
-      databaseServerName: ""
+      databaseServerName: "",
+      databaseLogin: "",
+      databasePassword: "",
+      databaseName: ""
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
@@ -48,6 +56,10 @@ export class ConnectionStrings extends Component<
     this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(
       this
     );
+    this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
+
+    this.setDatabaseLoginPassword = this.setDatabaseLoginPassword.bind(this);
+    this.setDatabaseName = this.setDatabaseName.bind(this);
   }
 
   public render(): JSX.Element {
@@ -55,6 +67,7 @@ export class ConnectionStrings extends Component<
     const databaseProvidersList = this.displayDatabaseProvidersList();
     // loop through and display all connection strings based on the database provider selected.
     const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
+    const isTrustedConnection = this.state.connectionType;
     return (
       <React.Fragment>
         <div className="input-group mb-3">
@@ -72,41 +85,50 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
-        <div>
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <label className="input-group-text" htmlFor="inputGroupSelect01">
-                Select Connection Type
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </label>
-            </div>
-            <select
-              className="custom-select"
-              id="connectiontypeselectgroup"
-              onChange={this.selectedConnectionStringType}
-            >
-              <option value="">Choose...</option>
-              <option value="Trusted">Trusted Connection</option>
-              <option value="Database">Database Login</option>
-            </select>
-          </div>
-        </div>
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon3">
-              Enter Database Server Name
-            </span>
-          </div>
-          <input
-            type="text"
-            className="form-control"
-            id="basic-url"
-            aria-describedby="basic-addon3"
-            value={this.state.databaseServerName}
-            onChange={this.handleDatabaseServerNameChange}
-            placeholder={"database server name"}
+
+        <ConnectionType
+          selectedConnectionStringType={this.selectedConnectionStringType}
+        />
+
+        <DatabaseInputField
+          labelValue={`Enter Server/Instance Name\t\t`}
+          placeHolder={"database server name"}
+          onValueChange={this.handleDatabaseServerNameChange}
+          inputValue={this.state.databaseServerName}
+          inputFieldType={InputFieldTypeEnum.servername}
+        />
+        <DatabaseInputField
+          labelValue={"Enter Database Name"}
+          placeHolder={"database name"}
+          onValueChange={this.setDatabaseName}
+          inputValue={this.state.databaseName}
+          inputFieldType={InputFieldTypeEnum.servername}
+        />
+
+        {/* Only display the Username textbox if the connection type is database*/}
+        {isTrustedConnection === "Database" ? (
+          <DatabaseInputField
+            labelValue={"Enter Login"}
+            placeHolder={"Login username"}
+            onValueChange={this.setDatabaseLoginName}
+            inputValue={this.state.databaseLogin}
+            inputFieldType={InputFieldTypeEnum.login}
           />
-        </div>
+        ) : (
+          ""
+        )}
+        {/* Only display the Username textbox if the connection type is database*/}
+        {isTrustedConnection === "Database" ? (
+          <DatabaseInputField
+            labelValue={"Enter Password"}
+            placeHolder={"Login password"}
+            onValueChange={this.setDatabaseLoginPassword}
+            inputValue={this.state.databasePassword}
+            inputFieldType={InputFieldTypeEnum.password}
+          />
+        ) : (
+          ""
+        )}
         {displayConnectionStringsRelatedToProviders}
       </React.Fragment>
     );
@@ -123,11 +145,14 @@ export class ConnectionStrings extends Component<
       return <p>No Connection strings defined.</p>;
     }
     return stringsList.map((cs, i) => (
-      <ConnectionStringPanel
+      <ConnectionStringCard
         key={"strings_" + i}
         databaseProvider={cs.description}
         connectionString={cs.connectionString}
         databaseServerName={this.state.databaseServerName}
+        databaseLoginName={this.state.databaseLogin}
+        databaseLoginPassword={this.state.databasePassword}
+        databaseName={this.state.databaseName}
       />
     ));
   }
@@ -139,6 +164,21 @@ export class ConnectionStrings extends Component<
         {cs.databaseName}
       </option>
     ));
+  }
+  // get the database login name
+  private setDatabaseLoginName(e: any) {
+    const loginName = e.target.value;
+    this.setState({ databaseLogin: loginName.toString().trim() });
+  }
+  // get the database login password
+  private setDatabaseLoginPassword(e: any) {
+    const loginPassword = e.target.value;
+    this.setState({ databasePassword: loginPassword.toString().trim() });
+  }
+  // get the database instance name password
+  private setDatabaseName(e: any) {
+    const instanceName = e.target.value;
+    this.setState({ databaseName: instanceName.toString().trim() });
   }
 
   // get the database name from the text box and set it to databaseServerName
@@ -160,14 +200,20 @@ export class ConnectionStrings extends Component<
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: "",
-        databaseServerName: ""
+        databaseServerName: "",
+        databaseLogin: "",
+        databasePassword: "",
+        databaseName: ""
       });
     } else {
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: selectedValue,
         connectionType: "",
-        databaseServerName: ""
+        databaseServerName: "",
+        databaseLogin: "",
+        databasePassword: "",
+        databaseName: ""
       });
     }
   }

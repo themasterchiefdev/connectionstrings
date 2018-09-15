@@ -39,7 +39,7 @@ export default class ConnectionStringsJSON {
           {
             description: "Access ODBC Connection String Driver",
             connectionString:
-              "{Microsoft Access Driver (*.mdb)};Dbq=rajivsservername.mdb;Uid=Admin;Pwd=;",
+              "{Microsoft Access Driver (*.mdb)};Dbq=rajivsservername.mdb;Uid=rajivsusername;Pwd=rajivspasssword;",
             connectionType: ConnectionStringType.database
           }
         ]
@@ -50,13 +50,13 @@ export default class ConnectionStringsJSON {
           {
             description: "DB2 ODBC Connection String",
             connectionString:
-              "driver={IBM DB2 ODBC DRIVER};Database=demodb;hostname=rajivsservername;port=myPortNum;protocol=TCPIP; uid=myusername; pwd=mypasswd",
+              "driver={IBM DB2 ODBC DRIVER};Database=rajivsdatabase;hostname=rajivsservername;port=myPortNum;protocol=TCPIP; uid=rajivsusername; pwd=rajivspasssword",
             connectionType: ConnectionStringType.database
           },
           {
             description: "DB2 OLEDB Connection String",
             connectionString:
-              "Provider=IBMDADB2;Database=demodeb;HOSTNAME=rajivsservername;PROTOCOL=TCPIP;PORT=50000;uid=myusername;pwd=mypasswd;",
+              "Provider=IBMDADB2;Database=rajivsdatabase;HOSTNAME=rajivsservername;PROTOCOL=TCPIP;PORT=50000;uid=rajivsusername;pwd=rajivspasssword;",
             connectionType: ConnectionStringType.database
           }
         ]
@@ -74,7 +74,7 @@ export default class ConnectionStringsJSON {
           {
             description: "DBase OLEDB Connection String",
             connectionString:
-              "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:directory;Extended Properties=dBASE IV;User ID=Admin;Password=",
+              "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:directory;Extended Properties=dBASE IV;User ID=rajivsusername;Password=rajivspasssword",
             connectionType: ConnectionStringType.database
           }
         ]
@@ -116,14 +116,14 @@ export default class ConnectionStringsJSON {
           {
             description: "Firebird ODBC Connection String",
             connectionString:
-              "DRIVER=Firebird/InterBase(r) driver;UID=SYSDBA;PWD=mypasswd;DBNAME=c:rajivsservername.fdb",
+              "DRIVER=Firebird/InterBase(r) driver;UID=rajivsusername;PWD=rajivspasssword;DBNAME=c:rajivsdatabase.fdb",
             connectionType: ConnectionStringType.database
           },
           {
             description: "Firebird OLEDB Connection String",
             connectionString:
               // tslint:disable-next-line:max-line-length
-              "User=SYSDBA;Password=mypasswd;Database=rajivsservername.fdb;DataSource=localhost;Port=3050;Dialect=3;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;Packet Size=8192;ServerType=0",
+              "User=rajivsusername;Password=rajivspasssword;Database=rajivsdatabase.fdb;DataSource=localhost;Port=3050;Dialect=3;Charset=NONE;Role=;Connection lifetime=15;Pooling=true;MinPoolSize=0;MaxPoolSize=50;Packet Size=8192;ServerType=0",
             connectionType: ConnectionStringType.database
           }
         ]
@@ -134,7 +134,7 @@ export default class ConnectionStringsJSON {
           {
             description: "SQL Server ODBC Connection String - Database Login",
             connectionString:
-              "Driver={SQL Server};Server=rajivsservername;Database=mydemodb;Uid=myusername;Pwd=mypasswd;",
+              "Driver={SQL Server};Server=rajivsservername;Database=rajivsdatabase;Uid=rajivsusername;Pwd=rajivspasssword;",
             connectionType: ConnectionStringType.database
           },
           {
@@ -142,14 +142,14 @@ export default class ConnectionStringsJSON {
               "SQL Server ODBC Connection String - Trusted Connection",
             connectionString:
               // tslint:disable-next-line:max-line-length
-              "Driver={SQL Server};Server=rajivsservername;Database=mydemodb;Trusted_Connection=yes;",
+              "Driver={SQL Server};Server=rajivsservername;Database=rajivsdatabase;Trusted_Connection=yes;",
             connectionType: ConnectionStringType.trusted
           },
           {
             description: "SQL Server OLEDB Connection String - Database Login",
             connectionString:
               // tslint:disable-next-line:max-line-length
-              "Provider=sqloledb;Data Source=rajivsservername;Initial Catalog=mydemodb;User Id=myusername;Password=mypasswd;",
+              "Provider=sqloledb;Data Source=rajivsservername;Initial Catalog=rajivsdatabase;User Id=rajivsusername;Password=rajivspasssword;",
             connectionType: ConnectionStringType.database
           },
           {
@@ -157,14 +157,14 @@ export default class ConnectionStringsJSON {
               "SQL Server OLEDB Connection String - Trusted Connection",
             connectionString:
               // tslint:disable-next-line:max-line-length
-              "Provider=sqloledb;Data Source=rajivsservername;Initial Catalog=mydemodb;Integrated Security=SSPI;",
+              "Provider=sqloledb;Data Source=rajivsservername;Initial Catalog=rajivsdatabase;Integrated Security=SSPI;",
             connectionType: ConnectionStringType.trusted
           },
           {
             description: "SQL Server .Net Connection String - Database Login",
             connectionString:
               // tslint:disable-next-line:max-line-length
-              "Server=rajivsservername;Database=mydemodb;User ID=myusername;Password=mypasswd;Trusted_Connection=False",
+              "Server=rajivsservername;Database=rajivsdatabase;User ID=rajivsusername;Password=rajivspasssword;Trusted_Connection=False",
             connectionType: ConnectionStringType.database
           },
           {
@@ -172,7 +172,7 @@ export default class ConnectionStringsJSON {
               "SQL Server .Net Connection String - Trusted Connection",
             connectionString:
               // tslint:disable-next-line:max-line-length
-              "Server=rajivsservername;Database=mydemodb;Integrated Security=SSPI;",
+              "Server=rajivsservername;Database=rajivsdatabase;Integrated Security=SSPI;",
             connectionType: ConnectionStringType.trusted
           }
         ]
