@@ -88,13 +88,12 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
 
-      
           <button
             className="btn btn-danger"
             type="button"
             id="button-addon2"
             onClick={this.handleReset}
-            disabled={this.state.databaseProvider===""}
+            disabled={this.state.databaseProvider === ""}
           >
             Reset
           </button>
@@ -198,22 +197,21 @@ export class ConnectionStrings extends Component<
   // reset all the fields
   private handleReset(e: any) {
     e.preventDefault();
-    // tslint:disable-next-line:no-console
-    console.log("Button Clicked");
     const getConnectionTypeDrpDwnList: HTMLSelectElement = document.getElementById(
       "connectiontypeselectgroup"
     ) as HTMLSelectElement;
     const getDatabaseProviderDrpDwnList: HTMLSelectElement = document.getElementById(
       "databaseProviderList"
     ) as HTMLSelectElement;
-
     this.setState({
-      databaseLogin: "",
-      databaseName: "",
-      databasePassword: "",
       databaseProvider: "",
-      databaseServerName: ""
+      databaseServerName: "",
+      databaseLogin: "",
+      databasePassword: "",
+      databaseName: "",
+      connectionType: ""
     });
+
     getConnectionTypeDrpDwnList.selectedIndex = 0;
     getDatabaseProviderDrpDwnList.selectedIndex = 0;
   }
