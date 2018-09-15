@@ -9,7 +9,10 @@ import ConnectionStringsJSON, {
   IConnectionStringDetails,
   IConnectionStringProvider
 } from "../services/stringdata";
+import ConnectionType from "./connectiontype";
+import { Credential, CredentialFieldTypeEnum } from "./credentials";
 import ConnectionStringPanel from "./displayconnectionstringcard";
+import ServerName from "./servername";
 
 /**
  * Defines the state of the Component
@@ -20,6 +23,8 @@ export interface IConnectionStringComponentState {
   databaseProvider: string;
   connectionType: string;
   databaseServerName: string;
+  databaseLogin: string;
+  databasePassword: string;
 }
 
 export class ConnectionStrings extends Component<
@@ -36,7 +41,9 @@ export class ConnectionStrings extends Component<
       connStrings: this.getAllConnectionStrings(),
       databaseProvider: "",
       connectionType: "",
-      databaseServerName: ""
+      databaseServerName: "",
+      databaseLogin: "",
+      databasePassword: ""
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
@@ -48,6 +55,9 @@ export class ConnectionStrings extends Component<
     this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(
       this
     );
+    this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
+
+    this.setDatabaseLoginPassword = this.setDatabaseLoginPassword.bind(this);
   }
 
   public render(): JSX.Element {
@@ -55,6 +65,7 @@ export class ConnectionStrings extends Component<
     const databaseProvidersList = this.displayDatabaseProvidersList();
     // loop through and display all connection strings based on the database provider selected.
     const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
+    const isTrustedConnection = this.state.connectionType;
     return (
       <React.Fragment>
         <div className="input-group mb-3">
@@ -72,41 +83,39 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
-        <div>
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <label className="input-group-text" htmlFor="inputGroupSelect01">
-                Select Connection Type
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </label>
-            </div>
-            <select
-              className="custom-select"
-              id="connectiontypeselectgroup"
-              onChange={this.selectedConnectionStringType}
-            >
-              <option value="">Choose...</option>
-              <option value="Trusted">Trusted Connection</option>
-              <option value="Database">Database Login</option>
-            </select>
-          </div>
-        </div>
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text" id="basic-addon3">
-              Enter Database Server Name
-            </span>
-          </div>
-          <input
-            type="text"
-            className="form-control"
-            id="basic-url"
-            aria-describedby="basic-addon3"
-            value={this.state.databaseServerName}
-            onChange={this.handleDatabaseServerNameChange}
-            placeholder={"database server name"}
+        <ConnectionType
+          selectedConnectionStringType={this.selectedConnectionStringType}
+        />
+
+        <ServerName
+          databaseServerName={this.state.databaseServerName}
+          handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
+        />
+
+        {/* Only display the Username textbox if the connection type is database*/}
+        {isTrustedConnection === "Database" ? (
+          <Credential
+            labelValue={"Enter Username"}
+            placeHolder={"Login username"}
+            onValueChange={this.setDatabaseLoginName}
+            credentialValue={this.state.databaseLogin}
+            credentialFieldType={CredentialFieldTypeEnum.login}
           />
-        </div>
+        ) : (
+          ""
+        )}
+        {/* Only display the Username textbox if the connection type is database*/}
+        {isTrustedConnection === "Database" ? (
+          <Credential
+            labelValue={"Enter Password"}
+            placeHolder={"Login password"}
+            onValueChange={this.setDatabaseLoginPassword}
+            credentialValue={this.state.databasePassword}
+            credentialFieldType={CredentialFieldTypeEnum.password}
+          />
+        ) : (
+          ""
+        )}
         {displayConnectionStringsRelatedToProviders}
       </React.Fragment>
     );
@@ -128,6 +137,8 @@ export class ConnectionStrings extends Component<
         databaseProvider={cs.description}
         connectionString={cs.connectionString}
         databaseServerName={this.state.databaseServerName}
+        databaseLoginName={this.state.databaseLogin}
+        databaseLoginPassword={this.state.databasePassword}
       />
     ));
   }
@@ -140,7 +151,16 @@ export class ConnectionStrings extends Component<
       </option>
     ));
   }
-
+  // get the database login name
+  private setDatabaseLoginName(e: any) {
+    const loginName = e.target.value;
+    this.setState({ databaseLogin: loginName.toString().trim() });
+  }
+  // get the database login name
+  private setDatabaseLoginPassword(e: any) {
+    const loginPassword = e.target.value;
+    this.setState({ databasePassword: loginPassword.toString().trim() });
+  }
   // get the database name from the text box and set it to databaseServerName
   // also prevent adding white spaces to the server name
   private handleDatabaseServerNameChange(e: any) {
@@ -160,14 +180,18 @@ export class ConnectionStrings extends Component<
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: "",
-        databaseServerName: ""
+        databaseServerName: "",
+        databaseLogin: "",
+        databasePassword: ""
       });
     } else {
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: selectedValue,
         connectionType: "",
-        databaseServerName: ""
+        databaseServerName: "",
+        databaseLogin: "",
+        databasePassword: ""
       });
     }
   }

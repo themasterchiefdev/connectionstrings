@@ -16,6 +16,9 @@ export interface IConnectionStringProps {
   connectionString: string;
 
   databaseServerName: string;
+
+  databaseLoginName: string;
+  databaseLoginPassword: string;
 }
 /**
  * Defines the ConnectionStringPanel state
@@ -43,10 +46,10 @@ class ConnectionStringPanel extends Component<
             </div>
             <div className="card-body">
               <code id={this.props.connectionString}>
-                {this.props.connectionString.replace(
-                  "rajivsservername",
-                  this.props.databaseServerName
-                )}
+                {this.props.connectionString
+                  .replace("rajivsservername", this.props.databaseServerName)
+                  .replace("rajivsusername", this.props.databaseLoginName)
+                  .replace("rajivspasssword", this.props.databaseLoginPassword)}
               </code>
             </div>
           </div>
