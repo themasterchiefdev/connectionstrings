@@ -5,10 +5,6 @@ export interface IServerNameProps {
 }
 
 class ServerName extends React.Component<IServerNameProps, {}> {
-  // state = { :  }
-  /**
-   *
-   */
   constructor(props: IServerNameProps) {
     super(props);
   }

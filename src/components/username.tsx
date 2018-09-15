@@ -1,15 +1,13 @@
 import * as React from "react";
-import { Component } from "react";
 
 interface IUsernameProps {
-  databaseLogin: string;
+  // databaseLogin: string;
+  placeHolder: string;
 }
-export class Username extends Component<IUsernameProps, {}> {
-  constructor(props: IUsernameProps) {
-    super(props);
-  }
-  public render() {
-    return (
+
+export function Username(props: IUsernameProps) {
+  return (
+    <React.Fragment>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
           <span className="input-group-text" id="basic-addon3">
@@ -22,11 +20,11 @@ export class Username extends Component<IUsernameProps, {}> {
           className="form-control"
           id="basic-url"
           aria-describedby="basic-addon3"
-          //   value={this.state.databaseServerName}
-          //   onChange={this.handleDatabaseServerNameChange}
-          placeholder={"database login name"}
+          // value={props.databaseLogin}
+          // onChange={this.handleDatabaseServerNameChange}
+          placeholder={props.placeHolder}
         />
       </div>
-    );
-  }
+    </React.Fragment>
+  );
 }

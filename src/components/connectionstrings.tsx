@@ -58,6 +58,7 @@ export class ConnectionStrings extends Component<
     const databaseProvidersList = this.displayDatabaseProvidersList();
     // loop through and display all connection strings based on the database provider selected.
     const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
+    const isTrustedConnection = this.state.connectionType;
     return (
       <React.Fragment>
         <div className="input-group mb-3">
@@ -75,7 +76,6 @@ export class ConnectionStrings extends Component<
             {databaseProvidersList}
           </select>
         </div>
-
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
         />
@@ -84,7 +84,12 @@ export class ConnectionStrings extends Component<
           databaseServerName={this.state.databaseServerName}
           handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
         />
-        <Username databaseLogin={"test"} />
+
+        {isTrustedConnection === "Database" ? (
+          <Username placeHolder={"Login username"} />
+        ) : (
+          ""
+        )}
         {displayConnectionStringsRelatedToProviders}
       </React.Fragment>
     );
