@@ -10,9 +10,9 @@ import ConnectionStringsJSON, {
   IConnectionStringProvider
 } from "../services/stringdata";
 import ConnectionType from "./connectiontype";
+import { Credential, CredentialFieldTypeEnum } from "./credentials";
 import ConnectionStringPanel from "./displayconnectionstringcard";
 import ServerName from "./servername";
-import { Username } from "./username";
 
 /**
  * Defines the state of the Component
@@ -88,11 +88,22 @@ export class ConnectionStrings extends Component<
           handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
         />
         {/* Only display the Username textbox if the connection type is database*/}
-        {isTrustedConnection === "Database" ? (
+        {/* {isTrustedConnection === "Database" ? (
           <Username
             placeHolder={"Login username"}
             onValueChange={this.setDatabaseLoginName}
             loginName={this.state.databaseLogin}
+          />
+        ) : (
+          ""
+        )} */}
+        {/* Only display the Username textbox if the connection type is database*/}
+        {isTrustedConnection === "Database" ? (
+          <Credential
+            placeHolder={"Login username"}
+            onValueChange={this.setDatabaseLoginName}
+            credentialValue={this.state.databaseLogin}
+            credentialFieldType={CredentialFieldTypeEnum.login}
           />
         ) : (
           ""
