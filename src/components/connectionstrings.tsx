@@ -10,9 +10,9 @@ import ConnectionStringsJSON, {
   IConnectionStringProvider
 } from "../services/stringdata";
 import ConnectionType from "./connectiontype";
-import { Credential, CredentialFieldTypeEnum } from "./credentials";
+import { DatabaseInputField, InputFieldTypeEnum } from "./credentials";
 import ConnectionStringCard from "./displayconnectionstringcard";
-import ServerName from "./servername";
+// import ServerName from "./servername";
 
 /**
  * Defines the state of the Component
@@ -87,31 +87,38 @@ export class ConnectionStrings extends Component<
           selectedConnectionStringType={this.selectedConnectionStringType}
         />
 
-        <ServerName
+        {/* <ServerName
           databaseServerName={this.state.databaseServerName}
           handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
+        /> */}
+        <DatabaseInputField
+          labelValue={"Enter Database Server Name"}
+          placeHolder={"database server name"}
+          onValueChange={this.handleDatabaseServerNameChange}
+          inputValue={this.state.databaseServerName}
+          inputFieldType={InputFieldTypeEnum.servername}
         />
 
         {/* Only display the Username textbox if the connection type is database*/}
         {isTrustedConnection === "Database" ? (
-          <Credential
-            labelValue={"Enter Username"}
+          <DatabaseInputField
+            labelValue={"Enter Database Login"}
             placeHolder={"Login username"}
             onValueChange={this.setDatabaseLoginName}
-            credentialValue={this.state.databaseLogin}
-            credentialFieldType={CredentialFieldTypeEnum.login}
+            inputValue={this.state.databaseLogin}
+            inputFieldType={InputFieldTypeEnum.login}
           />
         ) : (
           ""
         )}
         {/* Only display the Username textbox if the connection type is database*/}
         {isTrustedConnection === "Database" ? (
-          <Credential
-            labelValue={"Enter Password"}
+          <DatabaseInputField
+            labelValue={"Enter Database Password"}
             placeHolder={"Login password"}
             onValueChange={this.setDatabaseLoginPassword}
-            credentialValue={this.state.databasePassword}
-            credentialFieldType={CredentialFieldTypeEnum.password}
+            inputValue={this.state.databasePassword}
+            inputFieldType={InputFieldTypeEnum.password}
           />
         ) : (
           ""
