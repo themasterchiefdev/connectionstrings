@@ -9,9 +9,10 @@ import ConnectionStringsJSON, {
   IConnectionStringDetails,
   IConnectionStringProvider
 } from "../services/stringdata";
+import ConnectionStringCard from "./connectionstringcard";
 import ConnectionType from "./connectiontype";
 import { DatabaseInputField, InputFieldTypeEnum } from "./databaseinputfield";
-import ConnectionStringCard from "./displayconnectionstringcard";
+import DatabaseProviderList from "./databaseproviderlist";
 
 /**
  * Defines the state of the Component
@@ -56,49 +57,31 @@ export class ConnectionStrings extends Component<
     this.handleDatabaseServerNameChange = this.handleDatabaseServerNameChange.bind(
       this
     );
+    // bind the database login id event handler
     this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
 
+    // bind the database login password
     this.setDatabaseLoginPassword = this.setDatabaseLoginPassword.bind(this);
 
+    // bind the database name event handler
     this.setDatabaseName = this.setDatabaseName.bind(this);
 
+    // bind the reset functionality
     this.handleReset = this.handleReset.bind(this);
   }
 
   public render(): JSX.Element {
-    // Loop through the JSON data and populate the drop down list with DB providers.
-    const databaseProvidersList = this.displayDatabaseProvidersList();
-    // loop through and display all connection strings based on the database provider selected.
-    const displayConnectionStringsRelatedToProviders = this.displayConnectionStringsBasedOnProvider();
+    // Used to render the database login and password input fields
     const isTrustedConnection = this.state.connectionType;
+
     return (
       <React.Fragment>
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <label className="input-group-text" htmlFor="databaseProviderList">
-              Select the Database Provider
-            </label>
-          </div>
-          <select
-            className="custom-select"
-            id="databaseProviderList"
-            onChange={this.selectedDatabaseProvider}
-          >
-            <option value="">Choose...</option>
-            {databaseProvidersList}
-          </select>
-
-          <button
-            className="btn btn-danger"
-            type="button"
-            id="button-addon2"
-            onClick={this.handleReset}
-            disabled={this.state.databaseProvider === ""}
-          >
-            Reset
-          </button>
-        </div>
-
+        <DatabaseProviderList
+          onReset={this.handleReset}
+          isDisabled={this.state.databaseProvider === ""}
+          databaseProviderList={this.state.connStrings}
+          onSelectedChange={this.selectedDatabaseProvider}
+        />
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
           isDisabled={this.state.databaseProvider === ""}
@@ -147,41 +130,27 @@ export class ConnectionStrings extends Component<
         ) : (
           ""
         )}
-        {displayConnectionStringsRelatedToProviders}
+        {/* {displayConnectionStringsRelatedToProviders} */}
+        <ConnectionStringCard
+          connectionString={this.getConnectionStringsBasedOnTheProvider()}
+          databaseServerName={this.state.databaseServerName}
+          databaseLoginName={this.state.databaseLogin}
+          databaseLoginPassword={this.state.databasePassword}
+          databaseName={this.state.databaseName}
+        />
       </React.Fragment>
     );
   }
 
   //#region Set-up HTML UI elements
   // this would display the connection strings based on the provider selected
-  private displayConnectionStringsBasedOnProvider() {
+
+  private getConnectionStringsBasedOnTheProvider() {
     const stringsList = this.getConnectionStringsFortheProvider(
       this.state.databaseProvider,
       this.state.connectionType
     );
-    if (stringsList.length === 0) {
-      return <p>No Connection strings defined.</p>;
-    }
-    return stringsList.map((cs, i) => (
-      <ConnectionStringCard
-        key={"strings_" + i}
-        databaseProvider={cs.description}
-        connectionString={cs.connectionString}
-        databaseServerName={this.state.databaseServerName}
-        databaseLoginName={this.state.databaseLogin}
-        databaseLoginPassword={this.state.databasePassword}
-        databaseName={this.state.databaseName}
-      />
-    ));
-  }
-
-  // initialize the database provider drop down list
-  private displayDatabaseProvidersList() {
-    return this.state.connStrings.map((cs, i) => (
-      <option value={cs.databaseName} key={"options_" + i}>
-        {cs.databaseName}
-      </option>
-    ));
+    return stringsList;
   }
   // get the database login name
   private setDatabaseLoginName(e: any) {
