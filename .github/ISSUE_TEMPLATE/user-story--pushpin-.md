@@ -1,5 +1,5 @@
 ---
-name: User story
+name: 'User story :pushpin:'
 about: Agile User story
 
 ---

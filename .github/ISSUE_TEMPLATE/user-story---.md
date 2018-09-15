@@ -1,13 +1,13 @@
 ---
-name: User story
+name: "User story \U0001F4CC"
 about: Agile User story
 
 ---
 
-#### User story
+#### User story 📌
 The user story should have a reason to exist: what do I need as the user described in the summary?
 This part details any detail that could not be passed by the summary.
-
+ 
 
 In order to <achieve some business value>,
 As a <stakeholder type>
