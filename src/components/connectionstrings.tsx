@@ -118,6 +118,7 @@ export class ConnectionStrings extends Component<
         databaseProvider={cs.description}
         connectionString={cs.connectionString}
         databaseServerName={this.state.databaseServerName}
+        databaseLoginName={this.state.databaseLogin}
       />
     ));
   }
