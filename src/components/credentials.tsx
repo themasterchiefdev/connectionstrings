@@ -9,6 +9,7 @@ interface IUserCredentialProps {
   placeHolder: string;
   credentialValue: string;
   credentialFieldType: CredentialFieldTypeEnum;
+  labelValue: string;
 }
 
 export function Credential(props: IUserCredentialProps) {
@@ -17,8 +18,8 @@ export function Credential(props: IUserCredentialProps) {
       <div className="input-group mb-3">
         <div className="input-group-prepend">
           <span className="input-group-text" id="basic-addon3">
-            Enter Username
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {props.labelValue}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </span>
         </div>
         <input

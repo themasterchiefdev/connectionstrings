@@ -24,6 +24,7 @@ export interface IConnectionStringComponentState {
   connectionType: string;
   databaseServerName: string;
   databaseLogin: string;
+  databasePassword: string;
 }
 
 export class ConnectionStrings extends Component<
@@ -41,7 +42,8 @@ export class ConnectionStrings extends Component<
       databaseProvider: "",
       connectionType: "",
       databaseServerName: "",
-      databaseLogin: ""
+      databaseLogin: "",
+      databasePassword: ""
     };
     // bind selected database provider event handler
     this.selectedDatabaseProvider = this.selectedDatabaseProvider.bind(this);
@@ -54,6 +56,8 @@ export class ConnectionStrings extends Component<
       this
     );
     this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
+
+    this.setDatabaseLoginPassword = this.setDatabaseLoginPassword.bind(this);
   }
 
   public render(): JSX.Element {
@@ -87,23 +91,27 @@ export class ConnectionStrings extends Component<
           databaseServerName={this.state.databaseServerName}
           handleDatabaseServerNameChange={this.handleDatabaseServerNameChange}
         />
-        {/* Only display the Username textbox if the connection type is database*/}
-        {/* {isTrustedConnection === "Database" ? (
-          <Username
-            placeHolder={"Login username"}
-            onValueChange={this.setDatabaseLoginName}
-            loginName={this.state.databaseLogin}
-          />
-        ) : (
-          ""
-        )} */}
+
         {/* Only display the Username textbox if the connection type is database*/}
         {isTrustedConnection === "Database" ? (
           <Credential
+            labelValue={"Enter Username"}
             placeHolder={"Login username"}
             onValueChange={this.setDatabaseLoginName}
             credentialValue={this.state.databaseLogin}
             credentialFieldType={CredentialFieldTypeEnum.login}
+          />
+        ) : (
+          ""
+        )}
+        {/* Only display the Username textbox if the connection type is database*/}
+        {isTrustedConnection === "Database" ? (
+          <Credential
+            labelValue={"Enter Password"}
+            placeHolder={"Login password"}
+            onValueChange={this.setDatabaseLoginPassword}
+            credentialValue={this.state.databasePassword}
+            credentialFieldType={CredentialFieldTypeEnum.password}
           />
         ) : (
           ""
@@ -130,6 +138,7 @@ export class ConnectionStrings extends Component<
         connectionString={cs.connectionString}
         databaseServerName={this.state.databaseServerName}
         databaseLoginName={this.state.databaseLogin}
+        databaseLoginPassword={this.state.databasePassword}
       />
     ));
   }
@@ -142,9 +151,15 @@ export class ConnectionStrings extends Component<
       </option>
     ));
   }
+  // get the database login name
   private setDatabaseLoginName(e: any) {
     const loginName = e.target.value;
     this.setState({ databaseLogin: loginName.toString().trim() });
+  }
+  // get the database login name
+  private setDatabaseLoginPassword(e: any) {
+    const loginPassword = e.target.value;
+    this.setState({ databasePassword: loginPassword.toString().trim() });
   }
   // get the database name from the text box and set it to databaseServerName
   // also prevent adding white spaces to the server name
@@ -165,14 +180,18 @@ export class ConnectionStrings extends Component<
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: "",
-        databaseServerName: ""
+        databaseServerName: "",
+        databaseLogin: "",
+        databasePassword: ""
       });
     } else {
       getConnectionTypeDrpDwnList.selectedIndex = 0;
       this.setState({
         databaseProvider: selectedValue,
         connectionType: "",
-        databaseServerName: ""
+        databaseServerName: "",
+        databaseLogin: "",
+        databasePassword: ""
       });
     }
   }
