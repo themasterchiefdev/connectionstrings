@@ -59,7 +59,10 @@ export class ConnectionStrings extends Component<
     this.setDatabaseLoginName = this.setDatabaseLoginName.bind(this);
 
     this.setDatabaseLoginPassword = this.setDatabaseLoginPassword.bind(this);
+
     this.setDatabaseName = this.setDatabaseName.bind(this);
+
+    this.handleReset = this.handleReset.bind(this);
   }
 
   public render(): JSX.Element {
@@ -84,10 +87,21 @@ export class ConnectionStrings extends Component<
             <option value="">Choose...</option>
             {databaseProvidersList}
           </select>
+
+          <button
+            className="btn btn-danger"
+            type="button"
+            id="button-addon2"
+            onClick={this.handleReset}
+            disabled={this.state.databaseProvider === ""}
+          >
+            Reset
+          </button>
         </div>
 
         <ConnectionType
           selectedConnectionStringType={this.selectedConnectionStringType}
+          isDisabled={this.state.databaseProvider === ""}
         />
 
         <DatabaseInputField
@@ -96,6 +110,7 @@ export class ConnectionStrings extends Component<
           onValueChange={this.handleDatabaseServerNameChange}
           inputValue={this.state.databaseServerName}
           inputFieldType={InputFieldTypeEnum.servername}
+          isDisabled={this.state.connectionType === ""}
         />
         <DatabaseInputField
           labelValue={"Enter Database Name"}
@@ -103,16 +118,18 @@ export class ConnectionStrings extends Component<
           onValueChange={this.setDatabaseName}
           inputValue={this.state.databaseName}
           inputFieldType={InputFieldTypeEnum.servername}
+          isDisabled={this.state.databaseServerName === ""}
         />
 
         {/* Only display the Username textbox if the connection type is database*/}
         {isTrustedConnection === "Database" ? (
           <DatabaseInputField
             labelValue={"Enter Login"}
-            placeHolder={"Login username"}
+            placeHolder={"Login Id"}
             onValueChange={this.setDatabaseLoginName}
             inputValue={this.state.databaseLogin}
             inputFieldType={InputFieldTypeEnum.login}
+            isDisabled={this.state.databaseName === ""}
           />
         ) : (
           ""
@@ -125,6 +142,7 @@ export class ConnectionStrings extends Component<
             onValueChange={this.setDatabaseLoginPassword}
             inputValue={this.state.databasePassword}
             inputFieldType={InputFieldTypeEnum.password}
+            isDisabled={this.state.databaseLogin === ""}
           />
         ) : (
           ""
@@ -181,8 +199,27 @@ export class ConnectionStrings extends Component<
     this.setState({ databaseName: instanceName.toString().trim() });
   }
 
-  // get the database name from the text box and set it to databaseServerName
-  // also prevent adding white spaces to the server name
+  // reset all the fields
+  private handleReset(e: any) {
+    e.preventDefault();
+    const getConnectionTypeDrpDwnList: HTMLSelectElement = document.getElementById(
+      "connectiontypeselectgroup"
+    ) as HTMLSelectElement;
+    const getDatabaseProviderDrpDwnList: HTMLSelectElement = document.getElementById(
+      "databaseProviderList"
+    ) as HTMLSelectElement;
+    this.setState({
+      databaseProvider: "",
+      databaseServerName: "",
+      databaseLogin: "",
+      databasePassword: "",
+      databaseName: "",
+      connectionType: ""
+    });
+
+    getConnectionTypeDrpDwnList.selectedIndex = 0;
+    getDatabaseProviderDrpDwnList.selectedIndex = 0;
+  }
   private handleDatabaseServerNameChange(e: any) {
     const dbServerName = e.target.value;
     this.setState({
