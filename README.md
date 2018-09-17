@@ -1,12 +1,11 @@
 ### Project Description
 
-This is tiny project is built for quickly generating connection strings.
+This is a tiny project built for quickly generating connection strings.
 
 #### Problem Statement
 
 We want to have a quick and easy way to generate connection strings which can be used when adding/changing the registry keys or use them in the configuration files(ex: app.config or web.config).
 
-There are the many sites out there which provide the connection strings but the problem I had was that the connection strings need to be copied over and then edit it manually.
 
 #### Task:
 
@@ -21,7 +20,7 @@ I need to come-up with an app which would provide an easy workflow/wizard to
 
 Finally, generate the connection string which can be just copied over and used without fiddling with it anymore.
 
-I would also want to learn ReactJs while building the app.
+I would also want to learn ReactJs as I build the app.
 
 #### Action
 
