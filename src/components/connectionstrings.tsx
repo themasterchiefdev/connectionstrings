@@ -13,7 +13,6 @@ import ConnectionStringCard from "./connectionstringcard";
 import ConnectionType from "./connectiontype";
 import { DatabaseInputField, InputFieldTypeEnum } from "./databaseinputfield";
 import DatabaseProviderList from "./databaseproviderlist";
-
 /**
  * Defines the state of the Component
  * @interface IConnectionStringComponentState
@@ -68,6 +67,9 @@ export class ConnectionStrings extends Component<
 
     // bind the reset functionality
     this.handleReset = this.handleReset.bind(this);
+
+    // bind the copy strings
+    // this.handleCopyString = this.handleCopyString.bind(this);
   }
 
   public render(): JSX.Element {
@@ -137,6 +139,7 @@ export class ConnectionStrings extends Component<
           databaseLoginName={this.state.databaseLogin}
           databaseLoginPassword={this.state.databasePassword}
           databaseName={this.state.databaseName}
+          // copyString={this.handleCopyString}
         />
       </React.Fragment>
     );
@@ -167,6 +170,11 @@ export class ConnectionStrings extends Component<
     const instanceName = e.target.value;
     this.setState({ databaseName: instanceName.toString().trim() });
   }
+  // private handleCopyString(e: any) {
+  //   e.preventDefault();
+  //   // tslint:disable-next-line:no-console
+  //   console.log("Copy string clicked");
+  // }
 
   // reset all the fields
   private handleReset(e: any) {
