@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./App.css";
+import Footer from "./components/common/footer";
+import Navbar from "./components/common/navbar";
 import { ConnectionStrings } from "./components/connectionstrings";
-import Footer from "./components/footer";
-import Navbar from "./components/navbar";
 
 class App extends React.Component {
   public render() {

@@ -1,0 +1,2 @@
+Duplicate identifier 'LibraryManagedAttributes'.react types
+Ref: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/27805

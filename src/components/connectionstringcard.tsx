@@ -12,6 +12,8 @@ export interface IConnectionStringProps {
   databaseLoginName: string;
   databaseLoginPassword: string;
   databaseName: string;
+
+  copyString: any;
 }
 
 /**
@@ -22,6 +24,7 @@ class ConnectionStringCard extends React.Component<IConnectionStringProps, {}> {
   constructor(props: IConnectionStringProps) {
     super(props);
   }
+
   public render() {
     return (
       <React.Fragment>
@@ -36,10 +39,25 @@ class ConnectionStringCard extends React.Component<IConnectionStringProps, {}> {
   // return the mark-up of the connection string card
   private displayConnectionStringCard(props: IConnectionStringProps) {
     return props.connectionString.map((cs, i) => (
-      <div className="add-padding-bottom">
+      <div className="add-padding-bottom" key={"button_" + i}>
         <div className="card">
           <div className="card-header text-left font-weight-bold">
             {cs.description}
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm app-align-right clipboard"
+              onClick={props.copyString}
+              key={"button_" + i}
+              data-clipboard-text={cs.connectionString
+                .replace("rajivsservername", this.props.databaseServerName)
+                .replace("rajivsusername", this.props.databaseLoginName)
+                .replace("rajivspasssword", this.props.databaseLoginPassword)
+                .replace("rajivsdatabase", this.props.databaseName)}
+            >
+              <i className="fa fa-copy" key={"ic_" + i} />
+              &nbsp;&nbsp;Copy
+            </button>
+            <div className="clear-fix" key={"cl_" + i} />
           </div>
           <div className="card-body">
             <code id={"string_" + i} className="code-font">
