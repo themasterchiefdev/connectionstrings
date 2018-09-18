@@ -5,6 +5,7 @@
 
 import * as React from "react";
 import { Component } from "react";
+import { readFromClipboard } from "../services/clipboard";
 import ConnectionStringsJSON, {
   IConnectionStringDetails,
   IConnectionStringProvider
@@ -69,7 +70,7 @@ export class ConnectionStrings extends Component<
     this.handleReset = this.handleReset.bind(this);
 
     // bind the copy strings
-    // this.handleCopyString = this.handleCopyString.bind(this);
+    this.handleCopyString = this.handleCopyString.bind(this);
   }
 
   public render(): JSX.Element {
@@ -139,7 +140,7 @@ export class ConnectionStrings extends Component<
           databaseLoginName={this.state.databaseLogin}
           databaseLoginPassword={this.state.databasePassword}
           databaseName={this.state.databaseName}
-          // copyString={this.handleCopyString}
+          copyString={this.handleCopyString}
         />
       </React.Fragment>
     );
@@ -170,11 +171,12 @@ export class ConnectionStrings extends Component<
     const instanceName = e.target.value;
     this.setState({ databaseName: instanceName.toString().trim() });
   }
-  // private handleCopyString(e: any) {
-  //   e.preventDefault();
-  //   // tslint:disable-next-line:no-console
-  //   console.log("Copy string clicked");
-  // }
+  private handleCopyString(e: any) {
+    // e.preventDefault();
+    // tslint:disable-next-line:no-console
+    // console.log("Hello");
+    readFromClipboard(".clipboard");
+  }
 
   // reset all the fields
   private handleReset(e: any) {

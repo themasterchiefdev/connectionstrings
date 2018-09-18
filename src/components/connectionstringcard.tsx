@@ -13,7 +13,7 @@ export interface IConnectionStringProps {
   databaseLoginPassword: string;
   databaseName: string;
 
-  // copyString: any;
+  copyString: any;
 }
 
 /**
@@ -46,9 +46,13 @@ class ConnectionStringCard extends React.Component<IConnectionStringProps, {}> {
             <button
               type="button"
               className="btn btn-secondary btn-sm app-align-right clipboard"
-              // onClick={props.copyString}
+              onClick={props.copyString}
               key={"button_" + i}
-              data-clipboard-target={"string_" + i}
+              data-clipboard-text={cs.connectionString
+                .replace("rajivsservername", this.props.databaseServerName)
+                .replace("rajivsusername", this.props.databaseLoginName)
+                .replace("rajivspasssword", this.props.databaseLoginPassword)
+                .replace("rajivsdatabase", this.props.databaseName)}
             >
               <i className="fa fa-copy" key={"ic_" + i} />
               &nbsp;&nbsp;Copy
