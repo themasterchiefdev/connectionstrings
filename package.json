@@ -16,10 +16,12 @@
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
 		"start": "react-scripts-ts start",
-		"build": "react-scripts-ts build",
+		"build": "yarn clean:js && yarn clean:docsfolder && yarn react-scripts-ts build",
 		"test": "react-scripts-ts test --env=jsdom",
 		"eject": "react-scripts-ts eject",
-		"copyfiles": "cpx \"build/**/*.*\" docs\""
+		"copyfiles": "cpx \"build/**/*.*\" docs/\"",
+		"clean:js": "del-cli build/**/*.*",
+		"clean:docsfolder": "del-cli docs/**/*.*"
 	},
 	"devDependencies": {
 		"@types/clipboard": "^2.0.1",
@@ -27,6 +29,8 @@
 		"@types/node": "^10.9.4",
 		"@types/react": "^16.4.9",
 		"@types/react-dom": "^16.0.7",
+		"clean-webpack-plugin": "^0.1.19",
+		"del-cli": "^1.1.0",
 		"typescript": "^3.0.3"
 	},
 	"homepage": "https://yvrkarthik.github.io/connectionstrings/",

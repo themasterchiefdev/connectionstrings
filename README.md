@@ -2,6 +2,8 @@
 
 This is a tiny project built for quickly generating connection strings.
 
+[![Build Status](https://dev.azure.com/rajivyanamandra/connectionstrings/_apis/build/status/yvrkarthik.connectionstrings)](https://dev.azure.com/rajivyanamandra/connectionstrings/_build/latest?definitionId=12)
+
 #### Problem Statement
 
 We want to have a quick and easy way to generate connection strings which can be used when adding/changing the registry keys or use them in the configuration files(ex: app.config or web.config).
