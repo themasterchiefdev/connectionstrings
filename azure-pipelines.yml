@@ -15,5 +15,5 @@ steps:
 - script: |
     yarn install
     yarn build
-    # yarn copyfiles
+    yarn copyfiles
   displayName: 'yarn install and build'
