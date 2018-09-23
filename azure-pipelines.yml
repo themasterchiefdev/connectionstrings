@@ -17,3 +17,6 @@ steps:
       yarn build
       #yarn copyfiles
     displayName: "yarn install and build"
+trigger:
+  - develop
+
