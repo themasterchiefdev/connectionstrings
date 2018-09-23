@@ -19,7 +19,7 @@
 		"build": "yarn clean:js && yarn clean:docsfolder && yarn react-scripts-ts build && yarn copyfiles",
 		"test": "react-scripts-ts test --env=jsdom",
 		"eject": "react-scripts-ts eject",
-		"copyfiles": "cpx \"build/**/*.*\" docs\"",
+		"copyfiles": "cpx \"build/**/*.*\" docs/\"",
 		"clean:js": "del-cli build/**/*.*",
 		"clean:docsfolder": "del-cli docs/**/*.*"
 	},
